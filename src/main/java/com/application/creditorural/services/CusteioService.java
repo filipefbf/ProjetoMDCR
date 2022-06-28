@@ -1,23 +1,23 @@
 package com.application.creditorural.services;
 
-import com.application.creditorural.DTO.DTORoot;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.application.creditorural.entities.CusteioMunicipio;
+import com.application.creditorural.repositories.CusteioMunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CusteioService {
 
-//    @Autowired
-//    private DTORoot;
+    @Autowired
+    private CusteioMunicipioRepository custeioMunicipioRepository;
 
-    public DTORoot jsonToJava(String json) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, DTORoot.class);
+    public List<CusteioMunicipio> listaCusteio() {
+        return custeioMunicipioRepository.findAll();
+    }
 
-//        ObjectMapper om = new ObjectMapper();
-//        DTORoot root = om.readValue(data, DTORoot.class);
-
+    public CusteioMunicipio save(CusteioMunicipio custeioMunicipio) {
+        return custeioMunicipioRepository.save(custeioMunicipio);
     }
 }

@@ -9,26 +9,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @JsonRootName(value = "value")
-@Entity
-@Table(name = "Custeio")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class PostDto {
+public class PostDto implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    public int userId;
-//    public int id;
-//    public String title;
-//    public String body;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("Municipio")
     public String municipio;
     public String nomeProduto;
