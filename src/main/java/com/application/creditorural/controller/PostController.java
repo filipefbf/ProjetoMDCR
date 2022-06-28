@@ -14,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.annotation.PostConstruct;
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("posts")
@@ -27,7 +30,7 @@ public class PostController {
 
     private PostClient postClient;
 
-    @GetMapping
+    @PostConstruct
     public DTORoot getAllPosts() {
         DTORoot root = postClient.getAllPosts();
 
@@ -38,10 +41,16 @@ public class PostController {
         return root;
     }
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<CusteioMunicipio> listaCusteio() {
+        return custeioService.listaCusteio();
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CusteioMunicipio salvar(CusteioMunicipio custeioMunicipio) {
-        return custeioService .salvar(custeioMunicipio);
+    public CusteioMunicipio salvar(@RequestBody CusteioMunicipio custeioMunicipio) {
+        return custeioService.salvar(custeioMunicipio);
     }
 
     @GetMapping("/{id}")
