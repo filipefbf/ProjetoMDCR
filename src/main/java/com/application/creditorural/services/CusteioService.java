@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CusteioService {
@@ -17,7 +18,19 @@ public class CusteioService {
         return custeioMunicipioRepository.findAll();
     }
 
-    public CusteioMunicipio save(CusteioMunicipio custeioMunicipio) {
+    public CusteioMunicipio saveAll(CusteioMunicipio custeioMunicipio) {
         return custeioMunicipioRepository.save(custeioMunicipio);
+    }
+
+    public CusteioMunicipio salvar(CusteioMunicipio custeioMunicipio) {
+        return custeioMunicipioRepository.save(custeioMunicipio);
+    }
+
+    public Optional<CusteioMunicipio> buscarPorId(Long id) {
+        return custeioMunicipioRepository.findById(id);
+    }
+
+    public void removerPorId(Long id) {
+        custeioMunicipioRepository.deleteById(id);
     }
 }

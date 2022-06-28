@@ -10,13 +10,9 @@ import com.application.creditorural.repositories.CusteioMunicipioRepository;
 import com.application.creditorural.services.CusteioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor
 @RestController
@@ -37,9 +33,32 @@ public class PostController {
 
         for (PostDto p : root.getValue()) {
             CusteioMunicipio custeioMunicipio = DataConverter.getEntity(p);
-            custeioService.save(custeioMunicipio);
+            custeioService.saveAll(custeioMunicipio);
         }
         return root;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public CusteioMunicipio salvar(CusteioMunicipio custeioMunicipio) {
+        return custeioService .salvar(custeioMunicipio);
+    }
+
+    @GetMapping("/{id}")
+    public CusteioMunicipio buscarClientePorId(@PathVariable("id") Long id) {
+        return custeioService.buscarPorId(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente nao encontrado"));
+
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remover(@PathVariable("id") Long id) {
+        custeioService.buscarPorId(id)
+                .map(custeioMunicipio -> {
+                    custeioService.removerPorId(custeioMunicipio.getId());
+                    return Void.TYPE;
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente nao encontrado"));
 
     }
 }
