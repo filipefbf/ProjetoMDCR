@@ -10,11 +10,15 @@ import com.application.creditorural.repositories.CusteioMunicipioRepository;
 import com.application.creditorural.services.CusteioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -37,14 +41,24 @@ public class PostController {
         for (PostDto p : root.getValue()) {
             CusteioMunicipio custeioMunicipio = DataConverter.getEntity(p);
             custeioService.saveAll(custeioMunicipio);
+
         }
         return root;
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CusteioMunicipio> listaCusteio() {
-        return custeioService.listaCusteio();
+    public Page<CusteioMunicipio> listaCusteio(Pageable pageable) {
+        return custeioService.listaCusteio(pageable);
+    }
+
+    @GetMapping("/")
+    public ModelAndView getList() {
+        List<CusteioMunicipio> custeioList = this.custeioService.findAll();
+
+        ModelAndView mv = new ModelAndView("custeioMunicipio");
+        mv.addObject("custeioList", custeioList);
+        return mv;
     }
 
     @PostMapping

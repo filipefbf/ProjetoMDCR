@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Custeio Municipio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">municipio</th>
+                <th scope="col">nomeProduto</th>
+                <th scope="col">mesEmissao</th>
+                <th scope="col">anoEmissao</th>
+                <th scope="col">cdPrograma</th>
+                <th scope="col">cdSubPrograma</th>
+                <th scope="col">cdFonteRecurso</th>
+                <th scope="col">cdTipoSeguro</th>
+                <th scope="col">cdEstado</th>
+                <th scope="col">vlCusteio</th>
+                <th scope="col">cdProduto</th>
+                <th scope="col">codCadMu</th>
+                <th scope="col">atividade</th>
+                <th scope="col">cdModalidade</th>
+                <th scope="col">codIbge</th>
+                <th scope="col">areaCusteio</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="custeioList : ${custeioList}">
+                <td th:text="${custeioList.Id}"></td>
+                <td th:text="${custeioList.municipio}"></td>
+                <td th:text="${custeioList.nomeProduto}"></td>
+                <td th:text="${custeioList.mesEmissao}"></td>
+                <td th:text="${custeioList.anoEmissao}"></td>
+                <td th:text="${custeioList.cdPrograma}"></td>
+                <td th:text="${custeioList.cdSubPrograma}"></td>
+                <td th:text="${custeioList.cdFonteRecurso}"></td>
+                <td th:text="${custeioList.cdTipoSeguro}"></td>
+                <td th:text="${custeioList.vlCusteio}"></td>
+                <td th:text="${custeioList.cdProduto}"></td>
+                <td th:text="${custeioList.codCadMu}"></td>
+                <td th:text="${custeioList.atividade}"></td>
+                <td th:text="${custeioList.cdModalidade}"></td>
+                <td th:text="${custeioList.codIbge}"></td>
+                <td th:text="${custeioList.areaCusteio}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

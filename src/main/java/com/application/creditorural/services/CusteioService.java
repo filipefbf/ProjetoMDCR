@@ -3,6 +3,8 @@ package com.application.creditorural.services;
 import com.application.creditorural.entities.CusteioMunicipio;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +16,8 @@ public class CusteioService {
     @Autowired
     private CusteioMunicipioRepository custeioMunicipioRepository;
 
-    public List<CusteioMunicipio> listaCusteio() {
-        return custeioMunicipioRepository.findAll();
+    public Page<CusteioMunicipio> listaCusteio(Pageable pageable) {
+        return custeioMunicipioRepository.findAll(pageable);
     }
 
     public CusteioMunicipio saveAll(CusteioMunicipio custeioMunicipio) {
@@ -32,5 +34,9 @@ public class CusteioService {
 
     public void removerPorId(Long id) {
         custeioMunicipioRepository.deleteById(id);
+    }
+
+    public List<CusteioMunicipio> findAll() {
+        return custeioMunicipioRepository.findAll();
     }
 }
