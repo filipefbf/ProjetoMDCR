@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
@@ -53,8 +55,8 @@ public class PostController {
     }
 
     @GetMapping("/")
-    public ModelAndView getList() {
-        List<CusteioMunicipio> custeioList = this.custeioService.findAll();
+    public ModelAndView getList(Model model, Pageable pageable) {
+        Page<CusteioMunicipio> custeioList = this.custeioService.findAll(pageable);
 
         ModelAndView mv = new ModelAndView("custeioMunicipio");
         mv.addObject("custeioList", custeioList);
@@ -70,7 +72,7 @@ public class PostController {
     @GetMapping("/{id}")
     public CusteioMunicipio buscarClientePorId(@PathVariable("id") Long id) {
         return custeioService.buscarPorId(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente nao encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nao encontrado"));
 
     }
 
@@ -83,5 +85,13 @@ public class PostController {
                     return Void.TYPE;
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente nao encontrado"));
 
+    }
+
+    @GetMapping(value = "/search-ano")
+    public ResponseEntity<Page<CusteioMunicipio>> serchByAno(
+            @RequestParam(defaultValue = "") String anoEmissao,
+            Pageable pageable) {
+        Page<CusteioMunicipio> result = custeioMunicipioRepository.searchAno(anoEmissao, pageable);
+        return ResponseEntity.ok(result);
     }
 }

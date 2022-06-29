@@ -6,50 +6,72 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">municipio</th>
-                <th scope="col">nomeProduto</th>
-                <th scope="col">mesEmissao</th>
-                <th scope="col">anoEmissao</th>
-                <th scope="col">cdPrograma</th>
-                <th scope="col">cdSubPrograma</th>
-                <th scope="col">cdFonteRecurso</th>
-                <th scope="col">cdTipoSeguro</th>
-                <th scope="col">cdEstado</th>
-                <th scope="col">vlCusteio</th>
-                <th scope="col">cdProduto</th>
-                <th scope="col">codCadMu</th>
-                <th scope="col">atividade</th>
-                <th scope="col">cdModalidade</th>
-                <th scope="col">codIbge</th>
-                <th scope="col">areaCusteio</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="custeioList : ${custeioList}">
-                <td th:text="${custeioList.Id}"></td>
-                <td th:text="${custeioList.municipio}"></td>
-                <td th:text="${custeioList.nomeProduto}"></td>
-                <td th:text="${custeioList.mesEmissao}"></td>
-                <td th:text="${custeioList.anoEmissao}"></td>
-                <td th:text="${custeioList.cdPrograma}"></td>
-                <td th:text="${custeioList.cdSubPrograma}"></td>
-                <td th:text="${custeioList.cdFonteRecurso}"></td>
-                <td th:text="${custeioList.cdTipoSeguro}"></td>
-                <td th:text="${custeioList.vlCusteio}"></td>
-                <td th:text="${custeioList.cdProduto}"></td>
-                <td th:text="${custeioList.codCadMu}"></td>
-                <td th:text="${custeioList.atividade}"></td>
-                <td th:text="${custeioList.cdModalidade}"></td>
-                <td th:text="${custeioList.codIbge}"></td>
-                <td th:text="${custeioList.areaCusteio}"></td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="container overflow-auto">
+        <div class="row" style="background-color: #fff1cb; height: 200px;"></div>
+        <div class="row-12">
+            <table class="table table-striped text-center">
+                <thead class="align-middle">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Municipio</th>
+                    <th scope="col">Nome Produto</th>
+                    <th scope="col">Mes Emissao</th>
+                    <th scope="col">Ano Emissao</th>
+                    <th scope="col">Cd Programa</th>
+                    <th scope="col">Cd SubPrograma</th>
+                    <th scope="col">Cd Fonte Recurso</th>
+                    <th scope="col">Cd Tipo Seguro</th>
+                    <th scope="col">Cd Estado</th>
+                    <th scope="col">vl Custeio</th>
+                    <th scope="col">Cd Produto</th>
+                    <th scope="col">Cod Cad Mu</th>
+                    <th scope="col">Atividade</th>
+                    <th scope="col">Cd Modalidade</th>
+                    <th scope="col">Cd Ibge</th>
+                    <th scope="col">Area Custeio</th>
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                <tr th:each="custeioList : ${custeioList}">
+                    <td th:text="${custeioList.Id}"></td>
+                    <td th:text="${custeioList.municipio}"></td>
+                    <td th:text="${custeioList.nomeProduto}"></td>
+                    <td th:text="${custeioList.mesEmissao}"></td>
+                    <td th:text="${custeioList.anoEmissao}"></td>
+                    <td th:text="${custeioList.cdPrograma}"></td>
+                    <td th:text="${custeioList.cdSubPrograma}"></td>
+                    <td th:text="${custeioList.cdFonteRecurso}"></td>
+                    <td th:text="${custeioList.cdTipoSeguro}"></td>
+                    <td th:text="${custeioList.cdEstado}"></td>
+                    <td th:text="${custeioList.vlCusteio}"></td>
+                    <td th:text="${custeioList.cdProduto}"></td>
+                    <td th:text="${custeioList.codCadMu}"></td>
+                    <td th:text="${custeioList.atividade}"></td>
+                    <td th:text="${custeioList.cdModalidade}"></td>
+                    <td th:text="${custeioList.codIbge}"></td>
+                    <td th:text="${custeioList.areaCusteio}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="row" style="background-color: #fff1cb; height: 200px;"></div>
     </div>
 </body>
 </html>

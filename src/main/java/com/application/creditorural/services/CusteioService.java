@@ -36,7 +36,7 @@ public class CusteioService {
         custeioMunicipioRepository.deleteById(id);
     }
 
-    public List<CusteioMunicipio> findAll() {
-        return custeioMunicipioRepository.findAll();
+    public Page<CusteioMunicipio> findAll(Pageable pageable) {
+        return custeioMunicipioRepository.findAll(pageable);
     }
 }
