@@ -1,5 +1,6 @@
 package com.application.creditorural.services;
 
+import com.application.creditorural.DTO.FilterDto;
 import com.application.creditorural.entities.CusteioMunicipio;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,4 +40,10 @@ public class CusteioService {
     public Page<CusteioMunicipio> findAll(Pageable pageable) {
         return custeioMunicipioRepository.findAll(pageable);
     }
+
+//    public FilterDto findByYear(String anoEmissao) {
+//        CusteioMunicipio entity = (CusteioMunicipio) custeioMunicipioRepository.searchAnoFilter(anoEmissao);
+//        FilterDto dto = new FilterDto(entity);
+//        return dto;
+//    }
 }

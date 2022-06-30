@@ -14,53 +14,29 @@
                 Dados agregados relativos a operações de crédito rural registradas no sistema Sicor, contratadas por produtores rurais em instituições financeiras
             </div>
         </div>
-        <a class="btn btn-outline-primary btn-lg btn-block" style=" Margin: 15px" href="http://localhost:8080/posts/search-filter#" role="button">Filtro Padrão</a>
+        <a class="btn btn-outline-primary btn-lg btn-block" style=" Margin: 15px" href="http://localhost:8080/posts/?size=10&page=1" role="button">Lista Completa</a>
         <div class="row-12">
             <table class="table table-striped text-center">
                 <thead class="align-middle">
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">ID</th>
                     <th scope="col">Municipio</th>
                     <th scope="col">Nome Produto</th>
-                    <th scope="col">Mes Emissao</th>
-                    <th scope="col">Ano Emissao</th>
-                    <th scope="col">Cd Programa</th>
-                    <th scope="col">Cd SubPrograma</th>
-                    <th scope="col">Cd Fonte Recurso</th>
-                    <th scope="col">Cd Tipo Seguro</th>
-                    <th scope="col">Cd Estado</th>
-                    <th scope="col">vl Custeio</th>
-                    <th scope="col">Cd Produto</th>
                     <th scope="col">Cod Cad Mu</th>
-                    <th scope="col">Atividade</th>
-                    <th scope="col">Cd Modalidade</th>
-                    <th scope="col">Cd Ibge</th>
-                    <th scope="col">Area Custeio</th>
+                    <th scope="col">Cd Produto</th>
+                    <th scope="col">Ano Emissao</th>
+                    <th scope="col">vl Custeio</th>
                 </tr>
                 </thead>
                 <tbody class="text-center">
-                <tr th:each="custeioList : ${custeioList}">
-                    <td>
-                        <a href=""><img height="15px" th:src="@{/images/edit.png}"/><a/>
-                    </td>
-                    <td th:text="${custeioList.Id}"></td>
-                    <td th:text="${custeioList.municipio}"></td>
-                    <td th:text="${custeioList.nomeProduto}"></td>
-                    <td th:text="${custeioList.mesEmissao}"></td>
-                    <td th:text="${custeioList.anoEmissao}"></td>
-                    <td th:text="${custeioList.cdPrograma}"></td>
-                    <td th:text="${custeioList.cdSubPrograma}"></td>
-                    <td th:text="${custeioList.cdFonteRecurso}"></td>
-                    <td th:text="${custeioList.cdTipoSeguro}"></td>
-                    <td th:text="${custeioList.cdEstado}"></td>
-                    <td th:text="${custeioList.vlCusteio}"></td>
-                    <td th:text="${custeioList.cdProduto}"></td>
-                    <td th:text="${custeioList.codCadMu}"></td>
-                    <td th:text="${custeioList.atividade}"></td>
-                    <td th:text="${custeioList.cdModalidade}"></td>
-                    <td th:text="${custeioList.codIbge}"></td>
-                    <td th:text="${custeioList.areaCusteio}"></td>
+                <tr th:each="list : ${list}">
+                    <td th:text="${list.Id}"></td>
+                    <td th:text="${list.municipio}"></td>
+                    <td th:text="${list.nomeProduto}"></td>
+                    <td th:text="${list.codCadMu}"></td>
+                    <td th:text="${list.cdProduto}"></td>
+                    <td th:text="${list.anoEmissao}"></td>
+                    <td th:text="${list.vlCusteio}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -80,7 +56,6 @@
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
-                <a class="btn btn-primary" href="http://localhost:8080/posts/search-filter#" role="button">Link</a>
             </ul>
         </nav>
         <div class="row" style="background: rgb(2,0,36);background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 27%, rgba(9,9,121,1) 100%);">
