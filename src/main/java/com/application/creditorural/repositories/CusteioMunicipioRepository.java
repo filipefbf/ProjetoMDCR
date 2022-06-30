@@ -1,5 +1,6 @@
 package com.application.creditorural.repositories;
 
+import com.application.creditorural.DTO.FilterDto;
 import com.application.creditorural.entities.CusteioMunicipio;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,4 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface CusteioMunicipioRepository extends JpaRepository<CusteioMunicipio, Long> {
    @Query("SELECT obj FROM CusteioMunicipio obj WHERE LOWER(obj.anoEmissao) LIKE LOWER(CONCAT('%',:anoEmissao,'%'))")
     Page<CusteioMunicipio> searchAno(String anoEmissao, Pageable pageable);
+
+    @Query("SELECT obj FROM CusteioMunicipio obj WHERE LOWER(obj.anoEmissao) LIKE LOWER(CONCAT('%',:anoEmissao,'%'))")
+    Page<FilterDto> searchAnoFilter(String anoEmissao, Pageable pageable);
 }

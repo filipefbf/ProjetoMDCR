@@ -20,25 +20,25 @@ public class PostDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonProperty("Municipio")
-    public String municipio;
-    public String nomeProduto;
+    private String municipio;
+    private String nomeProduto;
     @JsonProperty("MesEmissao")
-    public String mesEmissao;
+    private String mesEmissao;
     @JsonProperty("AnoEmissao")
-    public String anoEmissao;
-    public String cdPrograma;
-    public String cdSubPrograma;
-    public String cdFonteRecurso;
-    public String cdTipoSeguro;
-    public String cdEstado;
+    private String anoEmissao;
+    private String cdPrograma;
+    private String cdSubPrograma;
+    private String cdFonteRecurso;
+    private String cdTipoSeguro;
+    private String cdEstado;
     @JsonProperty("VlCusteio")
-    public double vlCusteio;
-    public String cdProduto;
-    public String codCadMu;
+    private double vlCusteio;
+    private String cdProduto;
+    private String codCadMu;
     @JsonProperty("Atividade")
-    public String atividade;
-    public String cdModalidade;
-    public String codIbge;
+    private String atividade;
+    private String cdModalidade;
+    private String codIbge;
     @JsonProperty("AreaCusteio")
-    public int areaCusteio;
+    private int areaCusteio;
 }

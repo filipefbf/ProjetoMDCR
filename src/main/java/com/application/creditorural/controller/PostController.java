@@ -3,12 +3,14 @@ package com.application.creditorural.controller;
 
 import com.application.creditorural.Client.PostClient;
 import com.application.creditorural.DTO.DTORoot;
+import com.application.creditorural.DTO.FilterDto;
 import com.application.creditorural.DTO.PostDto;
 import com.application.creditorural.entities.CusteioMunicipio;
 import com.application.creditorural.entities.converter.DataConverter;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
 import com.application.creditorural.services.CusteioService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,11 +24,15 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("posts")
 public class PostController {
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private CusteioMunicipioRepository custeioMunicipioRepository;
@@ -93,5 +99,17 @@ public class PostController {
             Pageable pageable) {
         Page<CusteioMunicipio> result = custeioMunicipioRepository.searchAno(anoEmissao, pageable);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(value = "/search-ano-filter")
+    public List<FilterDto> listarTodos() {
+        return custeioMunicipioRepository.findAll()
+                .stream()
+                .map(this::toFilterDto)
+                .collect(Collectors.toList());
+    }
+
+    private FilterDto toFilterDto(CusteioMunicipio custeioMunicipio) {
+        return modelMapper.map(custeioMunicipio, FilterDto.class);
     }
 }

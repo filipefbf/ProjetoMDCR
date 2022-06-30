@@ -11,5 +11,5 @@ import java.util.List;
 @Data
 @Builder
 public class DTORoot {
-    public List<PostDto> value;
+    private List<PostDto> value;
 }
