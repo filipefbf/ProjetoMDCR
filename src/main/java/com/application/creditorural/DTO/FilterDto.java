@@ -3,11 +3,8 @@ package com.application.creditorural.DTO;
 import com.application.creditorural.entities.CusteioMunicipio;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.springframework.data.domain.Page;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor

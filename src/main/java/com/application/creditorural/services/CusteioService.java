@@ -41,9 +41,9 @@ public class CusteioService {
         return custeioMunicipioRepository.findAll(pageable);
     }
 
-    public FilterDto findById(Long id) {
-        CusteioMunicipio entity = custeioMunicipioRepository.findById(id).get();
-        FilterDto dto = new FilterDto(entity);
-        return dto;
-    }
+//    public FilterDto findByYear(String anoEmissao) {
+//        CusteioMunicipio entity = (CusteioMunicipio) custeioMunicipioRepository.searchAnoFilter(anoEmissao);
+//        FilterDto dto = new FilterDto(entity);
+//        return dto;
+//    }
 }
