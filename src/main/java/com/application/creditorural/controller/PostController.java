@@ -130,30 +130,30 @@ public class PostController {
         return ResponseEntity.ok(result);
     }
 
-//    @GetMapping(value = "/search-ano-filter/{anoEmissao}")
-//    public List<FilterDto> listarTodos(String anoEmissao) {
-//        return custeioMunicipioRepository.searchAnoFilter(anoEmissao)
-//                .stream()
-//                .map(this::toFilterDto)
-//                .collect(Collectors.toList());
-//    }
-//
-//    private FilterDto toFilterDto(CusteioMunicipio custeioMunicipio) {
-//        return modelMapper.map(custeioMunicipio, FilterDto.class);
-//    }
+    @GetMapping(value = "/search-ano-filter")
+    public List<FilterDto> listarTodos() {
+        return custeioMunicipioRepository.findAll()
+                .stream()
+                .map(this::toFilterDto)
+                .collect(Collectors.toList());
+    }
 
-//    @GetMapping(value = "/search-filter")
-//    public ModelAndView getListFilter(Model model, Pageable pageable) {
-//
-//        List<FilterDto> list = this.custeioMunicipioRepository.findAll()
-//                    .stream()
-//                    .map(this::toFilterDto)
-//                    .collect(Collectors.toList());
-//
-//        ModelAndView mv = new ModelAndView("custeioMunicipioFiltro");
-//        mv.addObject("list", list);
-//        return mv;
-//    }
+    private FilterDto toFilterDto(CusteioMunicipio custeioMunicipio) {
+        return modelMapper.map(custeioMunicipio, FilterDto.class);
+    }
+
+    @GetMapping(value = "/search-filter")
+    public ModelAndView getListFilter(Model model, Pageable pageable) {
+
+        List<FilterDto> list = this.custeioMunicipioRepository.findAll()
+                    .stream()
+                    .map(this::toFilterDto)
+                    .collect(Collectors.toList());
+
+        ModelAndView mv = new ModelAndView("custeioMunicipioFiltro");
+        mv.addObject("list", list);
+        return mv;
+    }
 
     @GetMapping(value = "/search-ano-filter/{anoEmissao}")
     @ApiOperation(value = "Retorna produtos agrupados por municipio")
