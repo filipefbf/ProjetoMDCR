@@ -10,6 +10,8 @@ import com.application.creditorural.entities.converter.DataConverter;
 import com.application.creditorural.entities.converter.FilterDtoConverter;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
 import com.application.creditorural.services.CusteioService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,9 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("posts")
+@RequestMapping("/posts")
+@Api(value = "API REST Custeio Produtos por Municipio")
+@CrossOrigin(origins = "*")
 public class PostController {
 
     @Autowired
@@ -56,12 +60,15 @@ public class PostController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Retorna uma lista de produtos")
     @ResponseStatus(HttpStatus.OK)
     public Page<CusteioMunicipio> listaCusteio(Pageable pageable) {
         return custeioService.listaCusteio(pageable);
     }
 
     @GetMapping("/")
+    @ApiOperation(value = "Retorna uma lista de por pagina")
+
     public ModelAndView getList(Model model, Pageable pageable) {
         Page<CusteioMunicipio> custeioList = this.custeioService.findAll(pageable);
 
@@ -96,6 +103,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Retorna produto único por Id")
     public CusteioMunicipio buscarClientePorId(@PathVariable("id") Long id) {
         return custeioService.buscarPorId(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nao encontrado"));
@@ -103,6 +111,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deleta produto único por Id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable("id") Long id) {
         custeioService.buscarPorId(id)
@@ -147,6 +156,7 @@ public class PostController {
 //    }
 
     @GetMapping(value = "/search-ano-filter/{anoEmissao}")
+    @ApiOperation(value = "Retorna produtos agrupados por municipio")
     public List<FilterDtoConverter> findFilter(@PathVariable String anoEmissao) {
         return custeioService.findFilter(anoEmissao);
     }

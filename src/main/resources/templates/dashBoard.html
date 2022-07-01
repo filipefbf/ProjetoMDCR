@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+    <link rel="icon" href="https://cdn.icon-icons.com/icons2/131/PNG/256/crop_food_20593.png">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Custeio Municipio</title>
+    <link rel="shortcut icon" type="imagem/png" th:href="@{/images/Logo.png}" />
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/dashboard/">
 
@@ -20,7 +21,10 @@
 
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
+        <span href="https://cdn.icon-icons.com/icons2/131/PNG/256/crop_food_20593.png"></span>
+        Company name
+    </a>
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -41,9 +45,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="https://olinda.bcb.gov.br/olinda/servico/SICOR/versao/v2/swagger-ui3#/">
                             <span data-feather="file"></span>
-                            Orders
+                            Api de Origem dos dados
                         </a>
                     </li>
                     <li class="nav-item">
@@ -61,13 +65,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="bar-chart-2"></span>
-                            Reports
+                            Dados Filtrados
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="http://localhost:8080/swagger-ui.html#/">
                             <span data-feather="layers"></span>
-                            Integrations
+                            Swagger
                         </a>
                     </li>
                 </ul>
@@ -80,9 +84,9 @@
                 </h6>
                 <ul class="nav flex-column mb-2">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="https://github.ibm.com/filipefbf/projeto-dados-de-credito-rural">
                             <span data-feather="file-text"></span>
-                            Current month
+                            Repositorio GitHub
                         </a>
                     </li>
                     <li class="nav-item">
@@ -149,7 +153,7 @@
                     <tbody class="text-center">
                     <tr th:each="custeioList : ${custeioList}">
                         <td>
-                            <a href=""><img height="15px" th:src="@{/images/edit.png}"/><a/>
+                            <a href=""><i data-feather="edit"></i><a/>
                         </td>
                         <td th:text="${custeioList.Id}"></td>
                         <td th:text="${custeioList.municipio}"></td>
