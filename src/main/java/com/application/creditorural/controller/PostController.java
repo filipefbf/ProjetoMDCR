@@ -7,6 +7,7 @@ import com.application.creditorural.DTO.FilterDto;
 import com.application.creditorural.DTO.PostDto;
 import com.application.creditorural.entities.CusteioMunicipio;
 import com.application.creditorural.entities.converter.DataConverter;
+import com.application.creditorural.entities.converter.FilterDtoConverter;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
 import com.application.creditorural.services.CusteioService;
 import lombok.AllArgsConstructor;
@@ -120,28 +121,33 @@ public class PostController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping(value = "/search-ano-filter")
-    public List<FilterDto> listarTodos() {
-        return custeioMunicipioRepository.findAll()
-                .stream()
-                .map(this::toFilterDto)
-                .collect(Collectors.toList());
-    }
+//    @GetMapping(value = "/search-ano-filter/{anoEmissao}")
+//    public List<FilterDto> listarTodos(String anoEmissao) {
+//        return custeioMunicipioRepository.searchAnoFilter(anoEmissao)
+//                .stream()
+//                .map(this::toFilterDto)
+//                .collect(Collectors.toList());
+//    }
+//
+//    private FilterDto toFilterDto(CusteioMunicipio custeioMunicipio) {
+//        return modelMapper.map(custeioMunicipio, FilterDto.class);
+//    }
 
-    private FilterDto toFilterDto(CusteioMunicipio custeioMunicipio) {
-        return modelMapper.map(custeioMunicipio, FilterDto.class);
-    }
+//    @GetMapping(value = "/search-filter")
+//    public ModelAndView getListFilter(Model model, Pageable pageable) {
+//
+//        List<FilterDto> list = this.custeioMunicipioRepository.findAll()
+//                    .stream()
+//                    .map(this::toFilterDto)
+//                    .collect(Collectors.toList());
+//
+//        ModelAndView mv = new ModelAndView("custeioMunicipioFiltro");
+//        mv.addObject("list", list);
+//        return mv;
+//    }
 
-    @GetMapping(value = "/search-filter")
-    public ModelAndView getListFilter(Model model, Pageable pageable) {
-
-        List<FilterDto> list = this.custeioMunicipioRepository.findAll()
-                    .stream()
-                    .map(this::toFilterDto)
-                    .collect(Collectors.toList());
-
-        ModelAndView mv = new ModelAndView("custeioMunicipioFiltro");
-        mv.addObject("list", list);
-        return mv;
+    @GetMapping(value = "/search-ano-filter/{anoEmissao}")
+    public List<FilterDtoConverter> findFilter(@PathVariable String anoEmissao) {
+        return custeioService.findFilter(anoEmissao);
     }
 }

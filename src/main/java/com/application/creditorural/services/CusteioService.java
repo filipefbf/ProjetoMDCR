@@ -1,17 +1,14 @@
 package com.application.creditorural.services;
 
-import com.application.creditorural.DTO.FilterDto;
 import com.application.creditorural.entities.CusteioMunicipio;
+import com.application.creditorural.entities.converter.FilterDtoConverter;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Book;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +45,10 @@ public class CusteioService {
     public Page<CusteioMunicipio> findPage(int pageNumber) {
         Pageable pageable = PageRequest.of(pageNumber - 1,10);
         return custeioMunicipioRepository.findAll(pageable);
+    }
+
+    public List<FilterDtoConverter> findFilter(String anoEmissao) {
+        return custeioMunicipioRepository.searchAnoFilter(anoEmissao);
     }
 
 //    public FilterDto findByYear(String anoEmissao) {
