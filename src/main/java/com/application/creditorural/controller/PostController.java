@@ -64,10 +64,29 @@ public class PostController {
     public ModelAndView getList(Model model, Pageable pageable) {
         Page<CusteioMunicipio> custeioList = this.custeioService.findAll(pageable);
 
-        ModelAndView mv = new ModelAndView("custeioMunicipio");
+        //ModelAndView mv = new ModelAndView("custeioMunicipio");
+        ModelAndView mv = new ModelAndView("dashBoard");
         mv.addObject("custeioList", custeioList);
         return mv;
     }
+
+//    @GetMapping("/")
+//    public String getAllPages(Model model){
+//        return getOnePage(model, 1);
+//    }
+//    @GetMapping("/{pageNumber}")
+//    public String getOnePage(Model model, @PathVariable("pageNumber") int currentPage) {
+//        Page<CusteioMunicipio> page = this.custeioService.findPage(currentPage);
+//        int totalPages = page.getTotalPages();
+//        long totalItems = page.getTotalElements();
+//        List<CusteioMunicipio> custeioList = page.getContent();
+//
+//        model.addAttribute("currentPage", currentPage);
+//        model.addAttribute("totalPages", totalPages);
+//        model.addAttribute("totalItems", totalItems);
+//        model.addAttribute("custeioList", custeioList);
+//        return "/";
+//    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

@@ -5,9 +5,13 @@ import com.application.creditorural.entities.CusteioMunicipio;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +42,11 @@ public class CusteioService {
     }
 
     public Page<CusteioMunicipio> findAll(Pageable pageable) {
+        return custeioMunicipioRepository.findAll(pageable);
+    }
+
+    public Page<CusteioMunicipio> findPage(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber - 1,10);
         return custeioMunicipioRepository.findAll(pageable);
     }
 

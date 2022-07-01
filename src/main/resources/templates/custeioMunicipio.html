@@ -6,14 +6,19 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container overflow-auto">
-        <div class="row" style="background: rgb(2,0,36);background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 27%, rgba(9,9,121,1) 100%);">
-            <div class="col" style="height: 200px; Margin: 15px"><img height="170px" th:src="@{/images/Logo.png}"/> </div>
-            <div class="col-8" style="height: 200px; Margin: 15px"><h1>Matriz de Dados do Crédito Rural - MDCR</h1>
-                [ Base URL: olinda.bcb.gov.br/olinda/servico/SICOR/versao/v2/odata ]<hr>
-                Dados agregados relativos a operações de crédito rural registradas no sistema Sicor, contratadas por produtores rurais em instituições financeiras
+    <div class="fixed-top" style="background: rgb(2,0,36);background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 27%, rgba(9,9,121,1) 100%);">
+        <div class="container">
+            <div class="row">
+                <div class="col" style="height: 200px; Margin: 15px"><img height="170px" th:src="@{/images/Logo.png}"/> </div>
+                <div class="col-8" style="height: 200px; Margin: 15px"><h1>Matriz de Dados do Crédito Rural - MDCR</h1>
+                    [ Base URL: olinda.bcb.gov.br/olinda/servico/SICOR/versao/v2/odata ]<hr>
+                    Dados agregados relativos a operações de crédito rural registradas no sistema Sicor, contratadas por produtores rurais em instituições financeiras
+                </div>
             </div>
         </div>
+    </div>
+
+    <div class="container overflow-auto" style=" Margin-top: 220px">
         <a class="btn btn-outline-primary btn-lg btn-block" style=" Margin: 15px" href="http://localhost:8080/posts/search-filter#" role="button">Filtro Padrão</a>
         <div class="row-12">
             <table class="table table-striped text-center">
@@ -41,6 +46,7 @@
                 </thead>
                 <tbody class="text-center">
                 <tr th:each="custeioList : ${custeioList}">
+                    <td><i class="fa fa-table"></i></td>
                     <td>
                         <a href=""><img height="15px" th:src="@{/images/edit.png}"/><a/>
                     </td>
@@ -83,6 +89,14 @@
                 <a class="btn btn-primary" href="http://localhost:8080/posts/search-filter#" role="button">Link</a>
             </ul>
         </nav>
+        <footer style="font-size: large" class="panel-footer">
+            Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+            &nbsp; &nbsp; - &nbsp;
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+        <a th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+        &nbsp; &nbsp;
+        </span>
+        </footer>
         <div class="row" style="background: rgb(2,0,36);background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 27%, rgba(9,9,121,1) 100%);">
             <div class="col" style="height: 200px; Margin: 15px"><img height="170px" th:src="@{/images/Logo.png}"/> </div>
             <div class="col-8" style="height: 200px; Margin: 15px"></div>
