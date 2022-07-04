@@ -1,5 +1,5 @@
 package com.application.creditorural.entities.converter;
-public interface FilterDtoConverter {
+public interface FilterConverter {
     public String getAnoEmissao();
     public String getMunicipio();
     public String getNomeProduto();

@@ -1,13 +1,13 @@
 package com.application.creditorural.controller;
 
 
-import com.application.creditorural.Client.PostClient;
-import com.application.creditorural.DTO.DTORoot;
+import com.application.creditorural.Client.CusteioFeignClient;
+import com.application.creditorural.DTO.DtoRoot;
 import com.application.creditorural.DTO.FilterDto;
-import com.application.creditorural.DTO.PostDto;
+import com.application.creditorural.DTO.ListDto;
 import com.application.creditorural.entities.CusteioMunicipio;
 import com.application.creditorural.entities.converter.DataConverter;
-import com.application.creditorural.entities.converter.FilterDtoConverter;
+import com.application.creditorural.entities.converter.FilterConverter;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
 import com.application.creditorural.services.CusteioService;
 import io.swagger.annotations.Api;
@@ -17,7 +17,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/list")
 @Api(value = "API REST Custeio Produtos por Municipio")
 @CrossOrigin(origins = "*")
 public class PostController {
@@ -40,20 +39,20 @@ public class PostController {
     private ModelMapper modelMapper;
 
     @Autowired
-    private CusteioMunicipioRepository custeioMunicipioRepository;
+    private CusteioMunicipioRepository repository;
 
     @Autowired
     public CusteioService custeioService;
 
-    private PostClient postClient;
+    private CusteioFeignClient custeioFeignClient;
 
     @PostConstruct
-    public DTORoot getAllPosts() {
-        DTORoot root = postClient.getAllPosts();
+    public DtoRoot getAllPosts() {
+        DtoRoot root = custeioFeignClient.getAllData();
 
-        for (PostDto p : root.getValue()) {
+        for (ListDto p : root.getValue()) {
             CusteioMunicipio custeioMunicipio = DataConverter.getEntity(p);
-            custeioService.saveAll(custeioMunicipio);
+            custeioService.save(custeioMunicipio);
 
         }
         return root;
@@ -62,13 +61,12 @@ public class PostController {
     @GetMapping
     @ApiOperation(value = "Retorna uma lista de produtos")
     @ResponseStatus(HttpStatus.OK)
-    public Page<CusteioMunicipio> listaCusteio(Pageable pageable) {
-        return custeioService.listaCusteio(pageable);
+    public Page<CusteioMunicipio> listCusteio(Pageable pageable) {
+        return custeioService.listCusteio(pageable);
     }
 
-    @GetMapping("/")
+    @GetMapping("/pages/")
     @ApiOperation(value = "Retorna uma lista de por pagina")
-
     public ModelAndView getList(Model model, Pageable pageable) {
         Page<CusteioMunicipio> custeioList = this.custeioService.findAll(pageable);
 
@@ -98,14 +96,15 @@ public class PostController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CusteioMunicipio salvar(@RequestBody CusteioMunicipio custeioMunicipio) {
-        return custeioService.salvar(custeioMunicipio);
+    public CusteioMunicipio save(@RequestBody CusteioMunicipio custeioMunicipio) {
+        return custeioService.save(custeioMunicipio);
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Retorna produto único por Id")
-    public CusteioMunicipio buscarClientePorId(@PathVariable("id") Long id) {
-        return custeioService.buscarPorId(id)
+    @ResponseStatus(HttpStatus.OK)
+    public CusteioMunicipio findById(@PathVariable("id") Long id) {
+        return custeioService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nao encontrado"));
 
     }
@@ -113,26 +112,26 @@ public class PostController {
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Deleta produto único por Id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void remover(@PathVariable("id") Long id) {
-        custeioService.buscarPorId(id)
+    public void remove(@PathVariable("id") Long id) {
+        custeioService.findById(id)
                 .map(custeioMunicipio -> {
-                    custeioService.removerPorId(custeioMunicipio.getId());
+                    custeioService.deleteById(custeioMunicipio.getId());
                     return Void.TYPE;
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente nao encontrado"));
 
     }
 
-    @GetMapping(value = "/search-ano")
+    @GetMapping(value = "/search-year")
     public ResponseEntity<Page<CusteioMunicipio>> serchByAno(
             @RequestParam(defaultValue = "") String anoEmissao,
             Pageable pageable) {
-        Page<CusteioMunicipio> result = custeioMunicipioRepository.searchAno(anoEmissao, pageable);
+        Page<CusteioMunicipio> result = repository.searchAno(anoEmissao, pageable);
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping(value = "/search-ano-filter")
-    public List<FilterDto> listarTodos() {
-        return custeioMunicipioRepository.findAll()
+    @GetMapping(value = "/search-year-filter")
+    public List<FilterDto> listAll() {
+        return repository.findAll()
                 .stream()
                 .map(this::toFilterDto)
                 .collect(Collectors.toList());
@@ -145,7 +144,7 @@ public class PostController {
     @GetMapping(value = "/search-filter")
     public ModelAndView getListFilter(Model model, Pageable pageable) {
 
-        List<FilterDto> list = this.custeioMunicipioRepository.findAll()
+        List<FilterDto> list = this.repository.findAll()
                     .stream()
                     .map(this::toFilterDto)
                     .collect(Collectors.toList());
@@ -155,9 +154,21 @@ public class PostController {
         return mv;
     }
 
-    @GetMapping(value = "/search-ano-filter/{anoEmissao}")
+    @GetMapping(value = "/search-year-filter/{anoEmissao}")
     @ApiOperation(value = "Retorna produtos agrupados por municipio")
-    public List<FilterDtoConverter> findFilter(@PathVariable String anoEmissao) {
+    public List<FilterConverter> findFilter(@PathVariable String anoEmissao) {
         return custeioService.findFilter(anoEmissao);
     }
+
+   @PutMapping("/{id}")
+   @ResponseStatus(HttpStatus.NO_CONTENT)
+   public void updateList(@PathVariable("id") Long id, @RequestBody CusteioMunicipio custeioMunicipio) {
+        custeioService.findById(id)
+                .map(CusteioMunicipio -> {
+                    modelMapper.map(custeioMunicipio, CusteioMunicipio);
+                    custeioService.save(custeioMunicipio);
+                    return Void.TYPE;
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Dado nao encontrado."));
+    }
+
 }
