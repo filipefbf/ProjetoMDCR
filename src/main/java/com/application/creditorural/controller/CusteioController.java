@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/list")
 @Api(value = "API REST Custeio Produtos por Municipio")
 @CrossOrigin(origins = "*")
-public class PostController {
+public class CusteioController {
 
     @Autowired
     private ModelMapper modelMapper;
@@ -137,7 +137,7 @@ public class PostController {
                 .collect(Collectors.toList());
     }
 
-    private FilterDto toFilterDto(CusteioMunicipio custeioMunicipio) {
+    public FilterDto toFilterDto(CusteioMunicipio custeioMunicipio) {
         return modelMapper.map(custeioMunicipio, FilterDto.class);
     }
 
