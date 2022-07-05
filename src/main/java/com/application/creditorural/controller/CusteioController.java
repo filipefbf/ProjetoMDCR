@@ -149,7 +149,7 @@ public class CusteioController {
                     .map(this::toFilterDto)
                     .collect(Collectors.toList());
 
-        ModelAndView mv = new ModelAndView("custeioMunicipioFiltro");
+        ModelAndView mv = new ModelAndView("dashBoardFilter");
         mv.addObject("list", list);
         return mv;
     }
