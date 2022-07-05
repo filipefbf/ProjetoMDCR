@@ -11,12 +11,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -35,6 +39,8 @@ class CusteioServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         startCusteio();
+
+        PageImpl<CusteioMunicipio> custeioPage = new PageImpl<>(List.of());
     }
     @Test
     void whenfindByIdThenReturnAnNotFoundException() {
@@ -47,14 +53,19 @@ class CusteioServiceTest {
         //Assertions.assertEquals(1L, response.getId());
     }
 
-//    @Test
-//    void whenfindAllThenReturnListCusteio() {
-//        when(repository.findAll()).thenReturn(List.of(custeioMunicipio));
-//        Pageable paginacao = PageRequest.of(0, 10);
-//        List<CusteioMunicipio> response = service.findAll(pageable);
-//
-//        assertNotNull(response);
-//    }
+    @Test
+    void whenfindAllThenReturnListCusteio() {
+        PageRequest paginacao = PageRequest.of(0, 10);
+        List<CusteioMunicipio> response = Arrays.asList(new CusteioMunicipio(), new CusteioMunicipio());
+        Page<CusteioMunicipio> responsePage = new PageImpl<>(response, paginacao, response.size());
+
+
+        assertNotNull(response);
+        assertEquals(2, response.size());
+        assertEquals(CusteioMunicipio.class, response.get(0).getClass());
+
+        assertEquals(0, response.get(0).getId());
+    }
 
     @Test
     void listCusteio() {
