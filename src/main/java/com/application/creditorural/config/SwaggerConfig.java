@@ -37,7 +37,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.application.creditorural"))
-                .paths(regex("/posts.*"))
+                .paths(regex("/list.*"))
                 .build()
                 .apiInfo(metaInfo());
     }

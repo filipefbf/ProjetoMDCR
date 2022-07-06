@@ -25,8 +25,12 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -103,6 +107,70 @@ class CusteioServiceTest {
         custeioMunicipio1.setVlCusteio(10.0d);
         assertSame(custeioMunicipio, custeioService.save(custeioMunicipio1));
         verify(custeioMunicipioRepository).save((CusteioMunicipio) any());
+    }
+
+    /**
+     * Method under test: {@link CusteioService#AddNew(CusteioMunicipio)}
+     */
+    @Test
+    void testAddNew() {
+        CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
+        custeioMunicipio.setAnoEmissao("Ano Emissao");
+        custeioMunicipio.setAreaCusteio(1);
+        custeioMunicipio.setAtividade("Atividade");
+        custeioMunicipio.setCdEstado("Cd Estado");
+        custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
+        custeioMunicipio.setCdModalidade("Cd Modalidade");
+        custeioMunicipio.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio.setCdPrograma("Cd Programa");
+        custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
+        custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
+        custeioMunicipio.setCodCadMu("Cod Cad Mu");
+        custeioMunicipio.setCodIbge("Cod Ibge");
+        custeioMunicipio.setId(123L);
+        custeioMunicipio.setMesEmissao("Mes Emissao");
+        custeioMunicipio.setMunicipio("Municipio");
+        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio.setVlCusteio(10.0d);
+        when(custeioMunicipioRepository.save((CusteioMunicipio) any())).thenReturn(custeioMunicipio);
+
+        CusteioMunicipio custeioMunicipio1 = new CusteioMunicipio();
+        custeioMunicipio1.setAnoEmissao("Ano Emissao");
+        custeioMunicipio1.setAreaCusteio(1);
+        custeioMunicipio1.setAtividade("Atividade");
+        custeioMunicipio1.setCdEstado("Cd Estado");
+        custeioMunicipio1.setCdFonteRecurso("Cd Fonte Recurso");
+        custeioMunicipio1.setCdModalidade("Cd Modalidade");
+        custeioMunicipio1.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio1.setCdPrograma("Cd Programa");
+        custeioMunicipio1.setCdSubPrograma("Cd Sub Programa");
+        custeioMunicipio1.setCdTipoSeguro("Cd Tipo Seguro");
+        custeioMunicipio1.setCodCadMu("Cod Cad Mu");
+        custeioMunicipio1.setCodIbge("Cod Ibge");
+        custeioMunicipio1.setId(123L);
+        custeioMunicipio1.setMesEmissao("Mes Emissao");
+        custeioMunicipio1.setMunicipio("Municipio");
+        custeioMunicipio1.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio1.setVlCusteio(10.0d);
+        custeioService.AddNew(custeioMunicipio1);
+        verify(custeioMunicipioRepository).save((CusteioMunicipio) any());
+        assertEquals("Ano Emissao", custeioMunicipio1.getAnoEmissao());
+        assertEquals(10.0d, custeioMunicipio1.getVlCusteio().doubleValue());
+        assertEquals("alice.liddell@example.org", custeioMunicipio1.getNomeProduto());
+        assertEquals("Municipio", custeioMunicipio1.getMunicipio());
+        assertEquals("Mes Emissao", custeioMunicipio1.getMesEmissao());
+        assertEquals(123L, custeioMunicipio1.getId());
+        assertEquals("Cod Ibge", custeioMunicipio1.getCodIbge());
+        assertEquals("Cod Cad Mu", custeioMunicipio1.getCodCadMu());
+        assertEquals("Cd Tipo Seguro", custeioMunicipio1.getCdTipoSeguro());
+        assertEquals("Cd Sub Programa", custeioMunicipio1.getCdSubPrograma());
+        assertEquals("Cd Programa", custeioMunicipio1.getCdPrograma());
+        assertEquals("alice.liddell@example.org", custeioMunicipio1.getCdProduto());
+        assertEquals("Cd Modalidade", custeioMunicipio1.getCdModalidade());
+        assertEquals("Cd Fonte Recurso", custeioMunicipio1.getCdFonteRecurso());
+        assertEquals("Cd Estado", custeioMunicipio1.getCdEstado());
+        assertEquals("Atividade", custeioMunicipio1.getAtividade());
+        assertEquals(1, custeioMunicipio1.getAreaCusteio().intValue());
     }
 
     @BeforeEach
@@ -228,6 +296,70 @@ class CusteioServiceTest {
         assertSame(filterConverterList, actualFindFilterResult);
         assertTrue(actualFindFilterResult.isEmpty());
         verify(custeioMunicipioRepository).searchYearFilter((String) any());
+    }
+
+    /**
+     * Method under test: {@link CusteioService#update(CusteioMunicipio)}
+     */
+    @Test
+    void testUpdate() {
+        CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
+        custeioMunicipio.setAnoEmissao("Ano Emissao");
+        custeioMunicipio.setAreaCusteio(1);
+        custeioMunicipio.setAtividade("Atividade");
+        custeioMunicipio.setCdEstado("Cd Estado");
+        custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
+        custeioMunicipio.setCdModalidade("Cd Modalidade");
+        custeioMunicipio.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio.setCdPrograma("Cd Programa");
+        custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
+        custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
+        custeioMunicipio.setCodCadMu("Cod Cad Mu");
+        custeioMunicipio.setCodIbge("Cod Ibge");
+        custeioMunicipio.setId(123L);
+        custeioMunicipio.setMesEmissao("Mes Emissao");
+        custeioMunicipio.setMunicipio("Municipio");
+        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio.setVlCusteio(10.0d);
+        when(custeioMunicipioRepository.save((CusteioMunicipio) any())).thenReturn(custeioMunicipio);
+
+        CusteioMunicipio custeioMunicipio1 = new CusteioMunicipio();
+        custeioMunicipio1.setAnoEmissao("Ano Emissao");
+        custeioMunicipio1.setAreaCusteio(1);
+        custeioMunicipio1.setAtividade("Atividade");
+        custeioMunicipio1.setCdEstado("Cd Estado");
+        custeioMunicipio1.setCdFonteRecurso("Cd Fonte Recurso");
+        custeioMunicipio1.setCdModalidade("Cd Modalidade");
+        custeioMunicipio1.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio1.setCdPrograma("Cd Programa");
+        custeioMunicipio1.setCdSubPrograma("Cd Sub Programa");
+        custeioMunicipio1.setCdTipoSeguro("Cd Tipo Seguro");
+        custeioMunicipio1.setCodCadMu("Cod Cad Mu");
+        custeioMunicipio1.setCodIbge("Cod Ibge");
+        custeioMunicipio1.setId(123L);
+        custeioMunicipio1.setMesEmissao("Mes Emissao");
+        custeioMunicipio1.setMunicipio("Municipio");
+        custeioMunicipio1.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio1.setVlCusteio(10.0d);
+        custeioService.update(custeioMunicipio1);
+        verify(custeioMunicipioRepository).save((CusteioMunicipio) any());
+        assertEquals("Ano Emissao", custeioMunicipio1.getAnoEmissao());
+        assertEquals(10.0d, custeioMunicipio1.getVlCusteio().doubleValue());
+        assertEquals("alice.liddell@example.org", custeioMunicipio1.getNomeProduto());
+        assertEquals("Municipio", custeioMunicipio1.getMunicipio());
+        assertEquals("Mes Emissao", custeioMunicipio1.getMesEmissao());
+        assertEquals(123L, custeioMunicipio1.getId());
+        assertEquals("Cod Ibge", custeioMunicipio1.getCodIbge());
+        assertEquals("Cod Cad Mu", custeioMunicipio1.getCodCadMu());
+        assertEquals("Cd Tipo Seguro", custeioMunicipio1.getCdTipoSeguro());
+        assertEquals("Cd Sub Programa", custeioMunicipio1.getCdSubPrograma());
+        assertEquals("Cd Programa", custeioMunicipio1.getCdPrograma());
+        assertEquals("alice.liddell@example.org", custeioMunicipio1.getCdProduto());
+        assertEquals("Cd Modalidade", custeioMunicipio1.getCdModalidade());
+        assertEquals("Cd Fonte Recurso", custeioMunicipio1.getCdFonteRecurso());
+        assertEquals("Cd Estado", custeioMunicipio1.getCdEstado());
+        assertEquals("Atividade", custeioMunicipio1.getAtividade());
+        assertEquals(1, custeioMunicipio1.getAreaCusteio().intValue());
     }
 
     @Test
