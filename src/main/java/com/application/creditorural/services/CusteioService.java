@@ -26,6 +26,10 @@ public class CusteioService {
         return repository.save(custeioMunicipio);
     }
 
+    public void AddNew(CusteioMunicipio custeioMunicipio) {
+        repository.save(custeioMunicipio);
+    }
+
     public Optional<CusteioMunicipio> findById(long id) {
         return repository.findById(id);
     }
@@ -47,9 +51,7 @@ public class CusteioService {
         return repository.searchYearFilter(anoEmissao);
     }
 
-//    public FilterDto findByYear(String anoEmissao) {
-//        CusteioMunicipio entity = (CusteioMunicipio) repository.searchAnoFilter(anoEmissao);
-//        FilterDto dto = new FilterDto(entity);
-//        return dto;
-//    }
+    public void update(CusteioMunicipio custeioMunicipio) {
+        repository.save(custeioMunicipio);
+    }
 }
