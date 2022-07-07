@@ -8,7 +8,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">Credito Rural</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -40,79 +40,93 @@
 </nav>
 <br>
 <br>
-<br>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="https://creditorural-dados.herokuapp.com/list/pages/">
+                            <span data-feather="home"></span>
+                            Retornar Página Inicial
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-<main role="main" class="container">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="starter-template">
+                <h2>Dashboard de dados de Custeio por Municipios e produtos</h2>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add New</button>
 
-    <div class="starter-template">
-        <h2>List of Cost</h2>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add New</button>
+                <table class="table table-responsive table-striped text-center row">
+                    <thead class="align-middle">
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Municipio</th>
+                        <th scope="col">Nome Produto</th>
+                        <th scope="col">Mes Emissao</th>
+                        <th scope="col">Ano Emissao</th>
+                        <th scope="col">Cd Programa</th>
+                        <th scope="col">Cd SubPrograma</th>
+                        <th scope="col">Cd Fonte Recurso</th>
+                        <th scope="col">Cd Tipo Seguro</th>
+                        <th scope="col">Cd Estado</th>
+                        <th scope="col">vl Custeio</th>
+                        <th scope="col">Cd Produto</th>
+                        <th scope="col">Cod Cad Mu</th>
+                        <th scope="col">Atividade</th>
+                        <th scope="col">Cd Modalidade</th>
+                        <th scope="col">Cd Ibge</th>
+                        <th scope="col">Area Custeio</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-center">
+                    <tr th:each="custeio : ${custeio}">
+                        <td><a th:href="@{/custeio/id/(id=${custeio.Id})}" id="editButton"><span data-feather="edit"></span></a></td>
+                        <td><a th:href="@{/custeio/delete/(id=${custeio.Id})}" id="deleteButton"><span data-feather="trash"></span></a></td>
+                        <td th:text="${custeio.Id}"></td>
+                        <td th:text="${custeio.municipio}"></td>
+                        <td th:text="${custeio.nomeProduto}"></td>
+                        <td th:text="${custeio.mesEmissao}"></td>
+                        <td th:text="${custeio.anoEmissao}"></td>
+                        <td th:text="${custeio.cdPrograma}"></td>
+                        <td th:text="${custeio.cdSubPrograma}"></td>
+                        <td th:text="${custeio.cdFonteRecurso}"></td>
+                        <td th:text="${custeio.cdTipoSeguro}"></td>
+                        <td th:text="${custeio.cdEstado}"></td>
+                        <td th:text="${custeio.vlCusteio}"></td>
+                        <td th:text="${custeio.cdProduto}"></td>
+                        <td th:text="${custeio.codCadMu}"></td>
+                        <td th:text="${custeio.atividade}"></td>
+                        <td th:text="${custeio.cdModalidade}"></td>
+                        <td th:text="${custeio.codIbge}"></td>
+                        <td th:text="${custeio.areaCusteio}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <table class="table table-responsive table-striped text-center row">
-            <thead class="align-middle">
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">#</th>
-                <th scope="col">ID</th>
-                <th scope="col">Municipio</th>
-                <th scope="col">Nome Produto</th>
-                <th scope="col">Mes Emissao</th>
-                <th scope="col">Ano Emissao</th>
-                <th scope="col">Cd Programa</th>
-                <th scope="col">Cd SubPrograma</th>
-                <th scope="col">Cd Fonte Recurso</th>
-                <th scope="col">Cd Tipo Seguro</th>
-                <th scope="col">Cd Estado</th>
-                <th scope="col">vl Custeio</th>
-                <th scope="col">Cd Produto</th>
-                <th scope="col">Cod Cad Mu</th>
-                <th scope="col">Atividade</th>
-                <th scope="col">Cd Modalidade</th>
-                <th scope="col">Cd Ibge</th>
-                <th scope="col">Area Custeio</th>
-            </tr>
-            </thead>
-            <tbody class="text-center">
-            <tr th:each="custeio : ${custeio}">
-                <td><a th:href="@{/custeio/id/(id=${custeio.Id})}" class="btn btn-warning" >Edit</a></td>
-                <td><a th:href="@{/custeio/delete/(id=${custeio.Id})}" class="btn btn-danger" id="deleteButton">Delete</a></td>
-                <td th:text="${custeio.Id}"></td>
-                <td th:text="${custeio.municipio}"></td>
-                <td th:text="${custeio.nomeProduto}"></td>
-                <td th:text="${custeio.mesEmissao}"></td>
-                <td th:text="${custeio.anoEmissao}"></td>
-                <td th:text="${custeio.cdPrograma}"></td>
-                <td th:text="${custeio.cdSubPrograma}"></td>
-                <td th:text="${custeio.cdFonteRecurso}"></td>
-                <td th:text="${custeio.cdTipoSeguro}"></td>
-                <td th:text="${custeio.cdEstado}"></td>
-                <td th:text="${custeio.vlCusteio}"></td>
-                <td th:text="${custeio.cdProduto}"></td>
-                <td th:text="${custeio.codCadMu}"></td>
-                <td th:text="${custeio.atividade}"></td>
-                <td th:text="${custeio.cdModalidade}"></td>
-                <td th:text="${custeio.codIbge}"></td>
-                <td th:text="${custeio.areaCusteio}"></td>
-            </tr>
-            </tbody>
-        </table>
+        </main><!-- /.container -->
     </div>
-
-</main><!-- /.container -->
+</div>
 
 
 
 <div class="modal fade show" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <form th:action="@{/custeio/addNew}" method="post">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">New Custeio</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+                <div class="modal-body">
 
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Id:</label>
@@ -200,12 +214,12 @@
                 </div>
 
             </div>
-            <div class="modal-footer">
+                <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
+            </div>
         </div>
-    </div>
     </form>
 </div>
 
@@ -336,10 +350,13 @@
     </div>
 </div>
 
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script>feather.replace()</script>
+
 <script>
     $('document').ready(function() {
 
-        $('.table .btn-warning').on('click',function(event){
+        $('.table #editButton').on('click',function(event){
 
             event.preventDefault();
 
