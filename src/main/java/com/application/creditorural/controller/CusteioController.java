@@ -80,12 +80,13 @@ public class CusteioController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Adicionar um novo registro a lista")
     public CusteioMunicipio save(@RequestBody CusteioMunicipio custeioMunicipio) {
         return custeioService.save(custeioMunicipio);
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Retorna produto único por Id")
+    @ApiOperation(value = "Retorna registro por Id")
     @ResponseStatus(HttpStatus.OK)
     public CusteioMunicipio findById(@PathVariable("id") Long id) {
         return custeioService.findById(id)
@@ -94,7 +95,7 @@ public class CusteioController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Deleta produto único por Id")
+    @ApiOperation(value = "Deleta registro por Id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remove(@PathVariable("id") Long id) {
         custeioService.findById(id)
@@ -106,6 +107,7 @@ public class CusteioController {
     }
 
     @GetMapping(value = "/search-year")
+    @ApiOperation(value = "Busca todos os registros listados por ano")
     public ResponseEntity<Page<CusteioMunicipio>> serchByAno(
             @RequestParam(defaultValue = "") String anoEmissao,
             Pageable pageable) {
@@ -114,6 +116,7 @@ public class CusteioController {
     }
 
     @GetMapping(value = "/search-year-filter")
+    @ApiOperation(value = "Busca todos os registros listados por ano")
     public List<FilterDto> listAll() {
         return repository.findAll()
                 .stream()
@@ -125,7 +128,9 @@ public class CusteioController {
         return modelMapper.map(custeioMunicipio, FilterDto.class);
     }
 
+    //Este endpoint foi criado apenas para ser usado na view
     @GetMapping(value = "/search-filter")
+    @ApiOperation(value = "EndPoint HTML")
     public ModelAndView getListFilter(Model model, Pageable pageable) {
 
         List<FilterDto> list = this.repository.findAll()
@@ -139,13 +144,14 @@ public class CusteioController {
     }
 
     @GetMapping(value = "/search-year-filter/{anoEmissao}")
-    @ApiOperation(value = "Retorna produtos agrupados por municipio")
+    @ApiOperation(value = "Busca todos os registros listados por ano agrupados por produtos com valores somados")
     public List<FilterConverter> findFilter(@PathVariable String anoEmissao) {
         return custeioService.findFilter(anoEmissao);
     }
 
    @PutMapping("/{id}")
    @ResponseStatus(HttpStatus.NO_CONTENT)
+   @ApiOperation(value = "Atualiza registro da lista")
    public void updateList(@PathVariable("id") Long id, @RequestBody CusteioMunicipio custeioMunicipio) {
          custeioService.findById(id)
                 .map(CusteioMunicipio -> {

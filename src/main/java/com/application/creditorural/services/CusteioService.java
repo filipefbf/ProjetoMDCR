@@ -47,6 +47,7 @@ public class CusteioService {
         return repository.findAll(pageable);
     }
 
+    //Filtro Completo por Municipio agrupado por produto com soma dos itens
     public List<FilterConverter> findFilter(String anoEmissao) {
         return repository.searchYearFilter(anoEmissao);
     }

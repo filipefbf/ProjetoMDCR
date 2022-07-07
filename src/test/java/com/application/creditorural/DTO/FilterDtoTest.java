@@ -8,9 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FilterDtoTest {
 
-    /**
-     * Method under test: {@link FilterDto#FilterDto(CusteioMunicipio)}
-     */
     @Test
     void testConstructor() {
         CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
