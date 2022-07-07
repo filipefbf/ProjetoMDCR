@@ -52,7 +52,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 new Contact("Filipe Ferreira", "https://www.linkedin.com/in/filipe-ferreira-dev/",
                         "filipefbf@ibm.com"),
                 "LandPage Dados Consolidados",
-                "http://localhost:8080/list/pages/", new ArrayList<VendorExtension>()
+                "https://creditorural-dados.herokuapp.com/list/pages/", new ArrayList<VendorExtension>()
         );
 
         return apiInfo;
