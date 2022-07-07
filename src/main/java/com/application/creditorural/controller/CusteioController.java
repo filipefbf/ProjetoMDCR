@@ -76,23 +76,7 @@ public class CusteioController {
         return mv;
     }
 
-//    @GetMapping("/")
-//    public String getAllPages(Model model){
-//        return getOnePage(model, 1);
-//    }
-//    @GetMapping("/{pageNumber}")
-//    public String getOnePage(Model model, @PathVariable("pageNumber") int currentPage) {
-//        Page<CusteioMunicipio> page = this.custeioService.findPage(currentPage);
-//        int totalPages = page.getTotalPages();
-//        long totalItems = page.getTotalElements();
-//        List<CusteioMunicipio> custeioList = page.getContent();
-//
-//        model.addAttribute("currentPage", currentPage);
-//        model.addAttribute("totalPages", totalPages);
-//        model.addAttribute("totalItems", totalItems);
-//        model.addAttribute("custeioList", custeioList);
-//        return "/";
-//    }
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -163,7 +147,7 @@ public class CusteioController {
    @PutMapping("/{id}")
    @ResponseStatus(HttpStatus.NO_CONTENT)
    public void updateList(@PathVariable("id") Long id, @RequestBody CusteioMunicipio custeioMunicipio) {
-        custeioService.findById(id)
+         custeioService.findById(id)
                 .map(CusteioMunicipio -> {
                     modelMapper.map(custeioMunicipio, CusteioMunicipio);
                     custeioService.save(custeioMunicipio);
