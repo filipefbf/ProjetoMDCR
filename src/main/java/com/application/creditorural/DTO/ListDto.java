@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 @JsonRootName(value = "value")
@@ -16,7 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class PostDto implements Serializable {
+public class ListDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonProperty("Municipio")

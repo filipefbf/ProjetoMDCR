@@ -32,7 +32,7 @@ public class CusteioMunicipio implements Serializable {
     private String cdTipoSeguro;
     private String cdEstado;
     @JsonProperty("VlCusteio")
-    private double vlCusteio;
+    private Double vlCusteio;
     private String cdProduto;
     private String codCadMu;
     @JsonProperty("Atividade")
@@ -40,5 +40,5 @@ public class CusteioMunicipio implements Serializable {
     private String cdModalidade;
     private String codIbge;
     @JsonProperty("AreaCusteio")
-    private int areaCusteio;
+    private Integer areaCusteio;
 }

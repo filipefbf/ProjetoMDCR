@@ -1,8 +1,7 @@
 package com.application.creditorural.repositories;
 
-import com.application.creditorural.DTO.FilterDto;
 import com.application.creditorural.entities.CusteioMunicipio;
-import com.application.creditorural.entities.converter.FilterDtoConverter;
+import com.application.creditorural.entities.converter.FilterConverter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,14 +23,5 @@ public interface CusteioMunicipioRepository extends JpaRepository<CusteioMunicip
             "FROM CusteioMunicipio obj " +
             "WHERE obj.anoEmissao = :anoEmissao AND obj.cdProduto IN ('7100', '6720', '3560', '5080', '1840') " +
             "GROUP BY obj.anoEmissao, obj.municipio, obj.nomeProduto")
-    List<FilterDtoConverter> searchAnoFilter(String anoEmissao);
-
-//    @Query("SELECT obj FROM CusteioMunicipio obj WHERE LOWER(obj.anoEmissao) LIKE LOWER(CONCAT('%',:anoEmissao,'%'))")
-//    List<FilterDtoConverter> searchAnoFilter(String anoEmissao);
-
-//    @Query("SELECT obj FROM CusteioMunicipio obj WHERE LOWER(obj.anoEmissao) LIKE LOWER(CONCAT('%',:anoEmissao,'%'))")
-//    Page<CusteioMunicipio> searchAnoFilter(String anoEmissao, Pageable pageable);
-
-
-
+    List<FilterConverter> searchYearFilter(String anoEmissao);
 }

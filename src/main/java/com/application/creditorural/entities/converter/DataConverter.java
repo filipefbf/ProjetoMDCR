@@ -1,12 +1,12 @@
 package com.application.creditorural.entities.converter;
 
-import com.application.creditorural.DTO.PostDto;
+import com.application.creditorural.DTO.ListDto;
 import com.application.creditorural.entities.CusteioMunicipio;
 
 public class
 DataConverter {
 
-    public static CusteioMunicipio getEntity(PostDto dto) {
+    public static CusteioMunicipio getEntity(ListDto dto) {
        return CusteioMunicipio.builder()
                .municipio(dto.getMunicipio())
                .nomeProduto(dto.getNomeProduto())

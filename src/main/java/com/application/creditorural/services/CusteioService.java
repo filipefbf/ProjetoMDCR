@@ -1,7 +1,7 @@
 package com.application.creditorural.services;
 
 import com.application.creditorural.entities.CusteioMunicipio;
-import com.application.creditorural.entities.converter.FilterDtoConverter;
+import com.application.creditorural.entities.converter.FilterConverter;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,44 +16,42 @@ import java.util.Optional;
 public class CusteioService {
 
     @Autowired
-    private CusteioMunicipioRepository custeioMunicipioRepository;
+    private CusteioMunicipioRepository repository;
 
-    public Page<CusteioMunicipio> listaCusteio(Pageable pageable) {
-        return custeioMunicipioRepository.findAll(pageable);
+    public Page<CusteioMunicipio> listCusteio(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
-    public CusteioMunicipio saveAll(CusteioMunicipio custeioMunicipio) {
-        return custeioMunicipioRepository.save(custeioMunicipio);
+    public CusteioMunicipio save(CusteioMunicipio custeioMunicipio) {
+        return repository.save(custeioMunicipio);
     }
 
-    public CusteioMunicipio salvar(CusteioMunicipio custeioMunicipio) {
-        return custeioMunicipioRepository.save(custeioMunicipio);
+    public void AddNew(CusteioMunicipio custeioMunicipio) {
+        repository.save(custeioMunicipio);
     }
 
-    public Optional<CusteioMunicipio> buscarPorId(Long id) {
-        return custeioMunicipioRepository.findById(id);
+    public Optional<CusteioMunicipio> findById(long id) {
+        return repository.findById(id);
     }
 
-    public void removerPorId(Long id) {
-        custeioMunicipioRepository.deleteById(id);
+    public void deleteById(Long id) {
+        repository.deleteById(id);
     }
 
     public Page<CusteioMunicipio> findAll(Pageable pageable) {
-        return custeioMunicipioRepository.findAll(pageable);
+        return repository.findAll(pageable);
     }
 
     public Page<CusteioMunicipio> findPage(int pageNumber) {
         Pageable pageable = PageRequest.of(pageNumber - 1,10);
-        return custeioMunicipioRepository.findAll(pageable);
+        return repository.findAll(pageable);
     }
 
-    public List<FilterDtoConverter> findFilter(String anoEmissao) {
-        return custeioMunicipioRepository.searchAnoFilter(anoEmissao);
+    public List<FilterConverter> findFilter(String anoEmissao) {
+        return repository.searchYearFilter(anoEmissao);
     }
 
-//    public FilterDto findByYear(String anoEmissao) {
-//        CusteioMunicipio entity = (CusteioMunicipio) custeioMunicipioRepository.searchAnoFilter(anoEmissao);
-//        FilterDto dto = new FilterDto(entity);
-//        return dto;
-//    }
+    public void update(CusteioMunicipio custeioMunicipio) {
+        repository.save(custeioMunicipio);
+    }
 }

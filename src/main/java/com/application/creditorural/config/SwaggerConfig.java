@@ -37,7 +37,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.application.creditorural"))
-                .paths(regex("/posts.*"))
+                .paths(regex("/list.*"))
                 .build()
                 .apiInfo(metaInfo());
     }
@@ -51,8 +51,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 "Terms of Service",
                 new Contact("Filipe Ferreira", "https://www.linkedin.com/in/filipe-ferreira-dev/",
                         "filipefbf@ibm.com"),
-                "Apache License Version 2.0",
-                "https://www.apache.org/licesen.html", new ArrayList<VendorExtension>()
+                "LandPage Dados Consolidados",
+                "http://localhost:8080/list/pages/", new ArrayList<VendorExtension>()
         );
 
         return apiInfo;

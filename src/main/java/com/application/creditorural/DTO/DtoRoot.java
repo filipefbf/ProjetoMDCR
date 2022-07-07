@@ -1,6 +1,5 @@
 package com.application.creditorural.DTO;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import java.util.List;
 
@@ -10,6 +9,6 @@ import java.util.List;
 @Setter
 @Data
 @Builder
-public class DTORoot {
-    private List<PostDto> value;
+public class DtoRoot {
+    private List<ListDto> value;
 }
