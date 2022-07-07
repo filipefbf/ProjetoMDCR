@@ -8,7 +8,7 @@ Aplicação tem como finalidade criar uma API Rest a partir de uma
 Matriz de Dados de acesso livre para consulta para os mais diversos fins
 
 ## Layout web
-![Web 1](Imagem Web)
+![](/src/main/resources/static/images/landPage.jpg)
 
 ## Instruções Inicias
 Para Navegar pelo Projeto e pela lista de itens consumidos da API criei 
