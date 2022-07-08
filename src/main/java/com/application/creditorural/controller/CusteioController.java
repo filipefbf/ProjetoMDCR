@@ -68,9 +68,9 @@ public class CusteioController {
         return custeioService.listCusteio(pageable);
     }
 
-    //End Point dedicado para a view HTML - mesma acao do endpoint acima
+    //End Point dedicado para a view HTML - mesma acao do endpoint acima para pagina HTML
     @GetMapping("/pages/")
-    @ApiOperation(value = "Retorna uma lista pagina - HTML ")
+    @ApiOperation(value = "Retorna uma lista paginada - HTML ")
     public ModelAndView getList(Model model, Pageable pageable) {
         Page<CusteioMunicipio> custeioList = this.custeioService.findAll(pageable);
 
@@ -80,8 +80,6 @@ public class CusteioController {
         return mv;
     }
 
-
-    //Criar um Novo registro
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Adicionar um novo registro a lista")
@@ -89,7 +87,6 @@ public class CusteioController {
         return custeioService.save(custeioMunicipio);
     }
 
-    //Buscar um registro por ID
     @GetMapping("/{id}")
     @ApiOperation(value = "Retornar registro por Id")
     @ResponseStatus(HttpStatus.OK)
@@ -97,7 +94,6 @@ public class CusteioController {
         return custeioService.findByIdd(id);
     }
 
-    //Deletar Item por ID
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Deletar registro por Id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -110,39 +106,29 @@ public class CusteioController {
 
     }
 
-    //Atualizar item por Id
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Atualiza registro da lista")
     public void updateList(@PathVariable("id") Long id, @RequestBody CusteioMunicipio custeioMunicipio) {
         custeioMunicipio.setId(id);
-        custeioService.findById(id)
-                .map(CusteioMunicipio -> {
-                    modelMapper.map(custeioMunicipio, CusteioMunicipio);
-                    custeioService.save(custeioMunicipio);
-                    return Void.TYPE;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Dado nao encontrado."));
+        custeioService.updateList(custeioMunicipio);
     }
 
-    //Buscar registros por Ano Paginada
     @GetMapping(value = "/search-year")
+    @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Busca todos os registros listados por ano")
-    public ResponseEntity<Page<CusteioMunicipio>> serchByAno(
-            @RequestParam(defaultValue = "") String anoEmissao,
-            Pageable pageable) {
-        Page<CusteioMunicipio> result = repository.searchAno(anoEmissao, pageable);
-        return ResponseEntity.ok(result);
+    public ResponseEntity<Page<CusteioMunicipio>> serchByAno(@RequestParam(defaultValue = "") String anoEmissao, Pageable pageable) {
+        Page<CusteioMunicipio> list = custeioService.serchByAno(anoEmissao, pageable);
+        return ResponseEntity.ok(list);
     }
 
-    //Buscar registros completos por Ano
     @GetMapping(value = "/search-year-filter")
     @ApiOperation(value = "Busca todos os registros listados por ano")
     public List<FilterDto> listAll(@RequestParam String anoEmissao) {
         return custeioService.listAll(anoEmissao, Pageable.unpaged());
     }
 
-    //Este endpoint foi criado apenas para ser usado na view HTML
-    @GetMapping(value = "/search-filter")
+   @GetMapping(value = "/search-filter")
     @ApiOperation(value = "EndPoint HTML")
     public ModelAndView getListFilter(@RequestParam String anoEmissao, Pageable pageable) {
         List<FilterDto> list = custeioService.listAll(anoEmissao, Pageable.unpaged());
@@ -152,7 +138,6 @@ public class CusteioController {
         return mv;
     }
 
-    //Endpoint com filtro completo conforme requisito 4 no desafio
     @GetMapping(value = "/search-year-filter/{anoEmissao}")
     @ApiOperation(value = "Busca todos os registros listados por ano agrupados por produtos com valores somados")
     public List<FilterConverter> findFilter(@PathVariable String anoEmissao) {
