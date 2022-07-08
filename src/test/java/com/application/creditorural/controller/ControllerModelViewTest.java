@@ -35,22 +35,6 @@ class ControllerModelViewTest {
     private CusteioService custeioService;
 
     @Test
-    @Disabled("TODO: Complete this test")
-    void testGetAll() {
-
-        ControllerModelView controllerModelView = new ControllerModelView();
-        controllerModelView.getAll(new ConcurrentModel(), null);
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testGetAll2() {
-
-        ControllerModelView controllerModelView = new ControllerModelView(new CusteioService());
-        controllerModelView.getAll(new ConcurrentModel(), null);
-    }
-
-    @Test
     void testGetAll3() {
 
         CusteioService custeioService = mock(CusteioService.class);
@@ -71,7 +55,7 @@ class ControllerModelViewTest {
         custeioMunicipio.setCdEstado("Cd Estado");
         custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio.setCdProduto("SOJA");
         custeioMunicipio.setCdPrograma("Cd Programa");
         custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
@@ -80,7 +64,7 @@ class ControllerModelViewTest {
         custeioMunicipio.setId(123L);
         custeioMunicipio.setMesEmissao("Mes Emissao");
         custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio.setNomeProduto("SOJA");
         custeioMunicipio.setVlCusteio(10.0d);
         Optional<CusteioMunicipio> ofResult = Optional.of(custeioMunicipio);
         when(custeioService.findById(anyLong())).thenReturn(ofResult);
@@ -93,9 +77,9 @@ class ControllerModelViewTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "{\"id\":123,\"nomeProduto\":\"alice.liddell@example.org\",\"cdPrograma\":\"Cd Programa\",\"cdSubPrograma\":\"Cd Sub"
+                                "{\"id\":123,\"nomeProduto\":\"SOJA\",\"cdPrograma\":\"Cd Programa\",\"cdSubPrograma\":\"Cd Sub"
                                         + " Programa\",\"cdFonteRecurso\":\"Cd Fonte Recurso\",\"cdTipoSeguro\":\"Cd Tipo Seguro\",\"cdEstado\":\"Cd"
-                                        + " Estado\",\"cdProduto\":\"alice.liddell@example.org\",\"codCadMu\":\"Cod Cad Mu\",\"cdModalidade\":\"Cd"
+                                        + " Estado\",\"cdProduto\":\"SOJA\",\"codCadMu\":\"Cod Cad Mu\",\"cdModalidade\":\"Cd"
                                         + " Modalidade\",\"codIbge\":\"Cod Ibge\",\"Municipio\":\"Municipio\",\"MesEmissao\":\"Mes Emissao\",\"AnoEmissao\":\"Ano"
                                         + " Emissao\",\"VlCusteio\":10.0,\"Atividade\":\"Atividade\",\"AreaCusteio\":1}"));
     }

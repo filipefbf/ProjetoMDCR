@@ -3,6 +3,7 @@ package com.application.creditorural.services;
 import com.application.creditorural.entities.CusteioMunicipio;
 import com.application.creditorural.entities.converter.FilterConverter;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
+import com.application.creditorural.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,8 +35,17 @@ public class CusteioService {
         return repository.findById(id);
     }
 
+    public CusteioMunicipio findByIdd(Long id) {
+        Optional<CusteioMunicipio> obj = repository.findById(id);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
     public void deleteById(Long id) {
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (RuntimeException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     public Page<CusteioMunicipio> findAll(Pageable pageable) {
