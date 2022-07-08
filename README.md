@@ -1,6 +1,9 @@
 # Projeto Desafio Matriz de Dados do Crédito Rural - MDCR IBM - A
 # Sobre o projeto
 
+Matriz de Dados do Crédito Rural - MDCR
+São dados agregados relativos a operações de crédito rural registradas no sistema Sicor, contratadas por produtores rurais em instituições financeiras.
+
 Desafio Matriz de Dados do Crédito Rural é uma aplicação back-end 
 construída como etapa de avaliação durante a formação de JAVA para associates. Programa IBM.
 
@@ -23,6 +26,7 @@ segue abaixo instruções caso queira ver o projeto do ponto de vista do desenvo
 
 ## Back end
 - Java JDK 17
+- -Spring Framework
 - Spring Boot
 - JPA / Hibernate
 - Maven
