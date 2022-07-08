@@ -3,6 +3,7 @@ package com.application.creditorural.services;
 import com.application.creditorural.entities.CusteioMunicipio;
 import com.application.creditorural.entities.converter.FilterConverter;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
+import com.application.creditorural.services.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.any;
@@ -210,6 +213,37 @@ class CusteioServiceTest {
         //Assertions.assertEquals(municipioOpitional, response.get());
         //Assertions.assertEquals(1L, response.getId());
     }
+    @Test
+    void testFindByIdd() {
+        CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
+        custeioMunicipio.setAnoEmissao("Ano Emissao");
+        custeioMunicipio.setAreaCusteio(1);
+        custeioMunicipio.setAtividade("Atividade");
+        custeioMunicipio.setCdEstado("Cd Estado");
+        custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
+        custeioMunicipio.setCdModalidade("Cd Modalidade");
+        custeioMunicipio.setCdProduto("SOJA");
+        custeioMunicipio.setCdPrograma("Cd Programa");
+        custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
+        custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
+        custeioMunicipio.setCodCadMu("Cod Cad Mu");
+        custeioMunicipio.setCodIbge("Cod Ibge");
+        custeioMunicipio.setId(123L);
+        custeioMunicipio.setMesEmissao("Mes Emissao");
+        custeioMunicipio.setMunicipio("Municipio");
+        custeioMunicipio.setNomeProduto("SOJA");
+        custeioMunicipio.setVlCusteio(10.0d);
+        Optional<CusteioMunicipio> ofResult = Optional.of(custeioMunicipio);
+        when(custeioMunicipioRepository.findById((Long) any())).thenReturn(ofResult);
+        assertSame(custeioMunicipio, custeioService.findByIdd(123L));
+        verify(custeioMunicipioRepository).findById((Long) any());
+    }
+    @Test
+    void testFindByIdd2() {
+        when(custeioMunicipioRepository.findById((Long) any())).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, () -> custeioService.findByIdd(123L));
+        verify(custeioMunicipioRepository).findById((Long) any());
+    }
 
     @Test
     void testDeleteById() {
@@ -236,14 +270,6 @@ class CusteioServiceTest {
         assertSame(pageImpl, actualFindPageResult);
         assertTrue(actualFindPageResult.toList().isEmpty());
         verify(custeioMunicipioRepository).findAll((Pageable) any());
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testFindPage2() {
-
-        when(custeioMunicipioRepository.findAll((Pageable) any())).thenReturn(new PageImpl<>(new ArrayList<>()));
-        custeioService.findPage(0);
     }
 
     @Test

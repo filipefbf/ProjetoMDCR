@@ -88,10 +88,8 @@ public class CusteioController {
     @GetMapping("/{id}")
     @ApiOperation(value = "Retorna registro por Id")
     @ResponseStatus(HttpStatus.OK)
-    public CusteioMunicipio findById(@PathVariable("id") Long id) {
-        return custeioService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nao encontrado"));
-
+    public CusteioMunicipio findByIdd(@PathVariable("id") Long id) {
+        return custeioService.findByIdd(id);
     }
 
     @DeleteMapping("/{id}")
@@ -102,7 +100,7 @@ public class CusteioController {
                 .map(custeioMunicipio -> {
                     custeioService.deleteById(custeioMunicipio.getId());
                     return Void.TYPE;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente nao encontrado"));
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not found, id " + id));
 
     }
 

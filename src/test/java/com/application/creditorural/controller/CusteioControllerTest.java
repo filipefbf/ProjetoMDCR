@@ -3,7 +3,6 @@ package com.application.creditorural.controller;
 import com.application.creditorural.Client.CusteioFeignClient;
 import com.application.creditorural.DTO.DtoRoot;
 import com.application.creditorural.DTO.FilterDto;
-import com.application.creditorural.DTO.ListDto;
 import com.application.creditorural.entities.CusteioMunicipio;
 import com.application.creditorural.entities.converter.FilterConverter;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ConcurrentModel;
-import org.springframework.ui.Model;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,21 +25,14 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class CusteioControllerTest {
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testGetAllPosts() {
-
-        CusteioFeignClient custeioFeignClient = mock(CusteioFeignClient.class);
-        when(custeioFeignClient.getAllData()).thenReturn(new DtoRoot());
-        ModelMapper modelMapper = new ModelMapper();
-        CusteioMunicipioRepository repository = mock(CusteioMunicipioRepository.class);
-        (new CusteioController(modelMapper, repository, new CusteioService(), custeioFeignClient)).getAllPosts();
-    }
-
     @Test
     void testGetAllPosts2() {
 
@@ -57,16 +48,6 @@ public class CusteioControllerTest {
     }
 
     @Test
-    @Disabled("TODO: Complete this test")
-    void testListCusteio() {
-
-        ModelMapper modelMapper = new ModelMapper();
-        CusteioMunicipioRepository repository = mock(CusteioMunicipioRepository.class);
-        (new CusteioController(modelMapper, repository, new CusteioService(), mock(CusteioFeignClient.class)))
-                .listCusteio(null);
-    }
-
-    @Test
     void testListCusteio2() {
 
         CusteioService custeioService = mock(CusteioService.class);
@@ -77,17 +58,6 @@ public class CusteioControllerTest {
         assertSame(pageImpl, actualListCusteioResult);
         assertTrue(actualListCusteioResult.toList().isEmpty());
         verify(custeioService).listCusteio((Pageable) any());
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testGetList() {
-
-        ModelMapper modelMapper = new ModelMapper();
-        CusteioMunicipioRepository repository = mock(CusteioMunicipioRepository.class);
-        CusteioController custeioController = new CusteioController(modelMapper, repository, new CusteioService(),
-                mock(CusteioFeignClient.class));
-        custeioController.getList(new ConcurrentModel(), null);
     }
 
     @Test
@@ -106,37 +76,6 @@ public class CusteioControllerTest {
     }
 
     @Test
-    @Disabled("TODO: Complete this test")
-    void testSave() {
-
-
-        ModelMapper modelMapper = new ModelMapper();
-        CusteioMunicipioRepository repository = mock(CusteioMunicipioRepository.class);
-        CusteioController custeioController = new CusteioController(modelMapper, repository, new CusteioService(),
-                mock(CusteioFeignClient.class));
-
-        CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
-        custeioMunicipio.setAnoEmissao("Ano Emissao");
-        custeioMunicipio.setAreaCusteio(1);
-        custeioMunicipio.setAtividade("Atividade");
-        custeioMunicipio.setCdEstado("Cd Estado");
-        custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
-        custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("alice.liddell@example.org");
-        custeioMunicipio.setCdPrograma("Cd Programa");
-        custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
-        custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
-        custeioMunicipio.setCodCadMu("Cod Cad Mu");
-        custeioMunicipio.setCodIbge("Cod Ibge");
-        custeioMunicipio.setId(123L);
-        custeioMunicipio.setMesEmissao("Mes Emissao");
-        custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
-        custeioMunicipio.setVlCusteio(10.0d);
-        custeioController.save(custeioMunicipio);
-    }
-
-    @Test
     void testSave2() {
 
         CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
@@ -146,7 +85,7 @@ public class CusteioControllerTest {
         custeioMunicipio.setCdEstado("Cd Estado");
         custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio.setCdProduto("SOJA");
         custeioMunicipio.setCdPrograma("Cd Programa");
         custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
@@ -155,7 +94,7 @@ public class CusteioControllerTest {
         custeioMunicipio.setId(123L);
         custeioMunicipio.setMesEmissao("Mes Emissao");
         custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio.setNomeProduto("SOJA");
         custeioMunicipio.setVlCusteio(10.0d);
         CusteioService custeioService = mock(CusteioService.class);
         when(custeioService.save((CusteioMunicipio) any())).thenReturn(custeioMunicipio);
@@ -169,7 +108,7 @@ public class CusteioControllerTest {
         custeioMunicipio1.setCdEstado("Cd Estado");
         custeioMunicipio1.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio1.setCdModalidade("Cd Modalidade");
-        custeioMunicipio1.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio1.setCdProduto("SOJA");
         custeioMunicipio1.setCdPrograma("Cd Programa");
         custeioMunicipio1.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio1.setCdTipoSeguro("Cd Tipo Seguro");
@@ -178,24 +117,14 @@ public class CusteioControllerTest {
         custeioMunicipio1.setId(123L);
         custeioMunicipio1.setMesEmissao("Mes Emissao");
         custeioMunicipio1.setMunicipio("Municipio");
-        custeioMunicipio1.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio1.setNomeProduto("SOJA");
         custeioMunicipio1.setVlCusteio(10.0d);
         assertSame(custeioMunicipio, custeioController.save(custeioMunicipio1));
         verify(custeioService).save((CusteioMunicipio) any());
     }
 
     @Test
-    @Disabled("TODO: Complete this test")
-    void testFindById() {
-
-        ModelMapper modelMapper = new ModelMapper();
-        CusteioMunicipioRepository repository = mock(CusteioMunicipioRepository.class);
-        (new CusteioController(modelMapper, repository, new CusteioService(), mock(CusteioFeignClient.class)))
-                .findById(123L);
-    }
-
-    @Test
-    void testFindById2() {
+    void testFindByIdd2() {
 
         CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
         custeioMunicipio.setAnoEmissao("Ano Emissao");
@@ -204,7 +133,7 @@ public class CusteioControllerTest {
         custeioMunicipio.setCdEstado("Cd Estado");
         custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio.setCdProduto("SOJA");
         custeioMunicipio.setCdPrograma("Cd Programa");
         custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
@@ -213,32 +142,13 @@ public class CusteioControllerTest {
         custeioMunicipio.setId(123L);
         custeioMunicipio.setMesEmissao("Mes Emissao");
         custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio.setNomeProduto("SOJA");
         custeioMunicipio.setVlCusteio(10.0d);
         CusteioService custeioService = mock(CusteioService.class);
-        when(custeioService.findById(anyLong())).thenReturn(Optional.of(custeioMunicipio));
+        when(custeioService.findByIdd((Long) any())).thenReturn(custeioMunicipio);
         assertSame(custeioMunicipio, (new CusteioController(new ModelMapper(), mock(CusteioMunicipioRepository.class),
-                custeioService, mock(CusteioFeignClient.class))).findById(123L));
-        verify(custeioService).findById(anyLong());
-    }
-
-    @Test
-    void testFindById3() {
-
-        CusteioService custeioService = mock(CusteioService.class);
-        when(custeioService.findById(anyLong())).thenReturn(Optional.empty());
-        assertThrows(ResponseStatusException.class, () -> (new CusteioController(new ModelMapper(),
-                mock(CusteioMunicipioRepository.class), custeioService, mock(CusteioFeignClient.class))).findById(123L));
-        verify(custeioService).findById(anyLong());
-    }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testRemove() {
-
-        ModelMapper modelMapper = new ModelMapper();
-        CusteioMunicipioRepository repository = mock(CusteioMunicipioRepository.class);
-        (new CusteioController(modelMapper, repository, new CusteioService(), mock(CusteioFeignClient.class))).remove(123L);
+                custeioService, mock(CusteioFeignClient.class))).findByIdd(123L));
+        verify(custeioService).findByIdd((Long) any());
     }
 
     @Test
@@ -251,7 +161,7 @@ public class CusteioControllerTest {
         custeioMunicipio.setCdEstado("Cd Estado");
         custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio.setCdProduto("SOJA");
         custeioMunicipio.setCdPrograma("Cd Programa");
         custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
@@ -260,7 +170,7 @@ public class CusteioControllerTest {
         custeioMunicipio.setId(123L);
         custeioMunicipio.setMesEmissao("Mes Emissao");
         custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio.setNomeProduto("SOJA");
         custeioMunicipio.setVlCusteio(10.0d);
         Optional<CusteioMunicipio> ofResult = Optional.of(custeioMunicipio);
         CusteioService custeioService = mock(CusteioService.class);
@@ -326,7 +236,7 @@ public class CusteioControllerTest {
         custeioMunicipio.setCdEstado("Cd Estado");
         custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio.setCdProduto("SOJA");
         custeioMunicipio.setCdPrograma("Cd Programa");
         custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
@@ -335,16 +245,16 @@ public class CusteioControllerTest {
         custeioMunicipio.setId(123L);
         custeioMunicipio.setMesEmissao("Mes Emissao");
         custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio.setNomeProduto("SOJA");
         custeioMunicipio.setVlCusteio(10.0d);
         FilterDto actualToFilterDtoResult = custeioController.toFilterDto(custeioMunicipio);
         assertEquals("Ano Emissao", actualToFilterDtoResult.getAnoEmissao());
         assertEquals(10.0d, actualToFilterDtoResult.getVlCusteio());
-        assertEquals("alice.liddell@example.org", actualToFilterDtoResult.getNomeProduto());
+        assertEquals("SOJA", actualToFilterDtoResult.getNomeProduto());
         assertEquals("Municipio", actualToFilterDtoResult.getMunicipio());
         assertEquals(123L, actualToFilterDtoResult.getId().longValue());
         assertEquals("Cod Cad Mu", actualToFilterDtoResult.getCodCadMu());
-        assertEquals("alice.liddell@example.org", actualToFilterDtoResult.getCdProduto());
+        assertEquals("SOJA", actualToFilterDtoResult.getCdProduto());
     }
 
     @Test
@@ -360,17 +270,6 @@ public class CusteioControllerTest {
         assertSame(actualListFilter.getModel(), actualListFilter.getModelMap());
         verify(custeioMunicipioRepository).findAll();
     }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testFindFilter() {
-
-        ModelMapper modelMapper = new ModelMapper();
-        CusteioMunicipioRepository repository = mock(CusteioMunicipioRepository.class);
-        (new CusteioController(modelMapper, repository, new CusteioService(), mock(CusteioFeignClient.class)))
-                .findFilter("Ano Emissao");
-    }
-
     @Test
     void testFindFilter2() {
 
@@ -384,35 +283,4 @@ public class CusteioControllerTest {
         assertTrue(actualFindFilterResult.isEmpty());
         verify(custeioService).findFilter((String) any());
     }
-
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testUpdateList() {
-
-        ModelMapper modelMapper = new ModelMapper();
-        CusteioMunicipioRepository repository = mock(CusteioMunicipioRepository.class);
-        CusteioController custeioController = new CusteioController(modelMapper, repository, new CusteioService(),
-                mock(CusteioFeignClient.class));
-
-        CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
-        custeioMunicipio.setAnoEmissao("Ano Emissao");
-        custeioMunicipio.setAreaCusteio(1);
-        custeioMunicipio.setAtividade("Atividade");
-        custeioMunicipio.setCdEstado("Cd Estado");
-        custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
-        custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("alice.liddell@example.org");
-        custeioMunicipio.setCdPrograma("Cd Programa");
-        custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
-        custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
-        custeioMunicipio.setCodCadMu("Cod Cad Mu");
-        custeioMunicipio.setCodIbge("Cod Ibge");
-        custeioMunicipio.setId(123L);
-        custeioMunicipio.setMesEmissao("Mes Emissao");
-        custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
-        custeioMunicipio.setVlCusteio(10.0d);
-        custeioController.updateList(123L, custeioMunicipio);
-    }
-
 }
