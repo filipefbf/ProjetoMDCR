@@ -3,6 +3,7 @@ package com.application.creditorural.controller;
 import com.application.creditorural.Client.CusteioFeignClient;
 import com.application.creditorural.DTO.DtoRoot;
 import com.application.creditorural.DTO.FilterDto;
+import com.application.creditorural.DTO.ListDto;
 import com.application.creditorural.entities.CusteioMunicipio;
 import com.application.creditorural.entities.converter.FilterConverter;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ConcurrentModel;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,9 +28,16 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -183,51 +193,12 @@ public class CusteioControllerTest {
     }
 
     @Test
-    void testSerchByAno() {
+    void testUpdateList2() {
 
-        CusteioMunicipioRepository custeioMunicipioRepository = mock(CusteioMunicipioRepository.class);
-        when(custeioMunicipioRepository.searchAno((String) any(), (Pageable) any()))
-                .thenReturn(new PageImpl<>(new ArrayList<>()));
-        ModelMapper modelMapper = new ModelMapper();
-        ResponseEntity<Page<CusteioMunicipio>> actualSerchByAnoResult = (new CusteioController(modelMapper,
-                custeioMunicipioRepository, new CusteioService(), mock(CusteioFeignClient.class))).serchByAno("foo", null);
-        assertTrue(actualSerchByAnoResult.hasBody());
-        assertTrue(actualSerchByAnoResult.getBody().toList().isEmpty());
-        assertEquals(HttpStatus.OK, actualSerchByAnoResult.getStatusCode());
-        assertTrue(actualSerchByAnoResult.getHeaders().isEmpty());
-        verify(custeioMunicipioRepository).searchAno((String) any(), (Pageable) any());
-    }
-
-    @Test
-    void testSerchByAno2() {
-
-        CusteioMunicipioRepository custeioMunicipioRepository = mock(CusteioMunicipioRepository.class);
-        when(custeioMunicipioRepository.searchAno((String) any(), (Pageable) any()))
-                .thenThrow(new ResponseStatusException(HttpStatus.CONTINUE));
-        ModelMapper modelMapper = new ModelMapper();
-        assertThrows(ResponseStatusException.class, () -> (new CusteioController(modelMapper, custeioMunicipioRepository,
-                new CusteioService(), mock(CusteioFeignClient.class))).serchByAno("foo", null));
-        verify(custeioMunicipioRepository).searchAno((String) any(), (Pageable) any());
-    }
-
-    @Test
-    void testListAll() {
-
-        CusteioMunicipioRepository custeioMunicipioRepository = mock(CusteioMunicipioRepository.class);
-        when(custeioMunicipioRepository.findAll()).thenReturn(new ArrayList<>());
-        ModelMapper modelMapper = new ModelMapper();
-        assertTrue((new CusteioController(modelMapper, custeioMunicipioRepository, new CusteioService(),
-                mock(CusteioFeignClient.class))).listAll().isEmpty());
-        verify(custeioMunicipioRepository).findAll();
-    }
-
-    @Test
-    void testToFilterDto() {
-
-        ModelMapper modelMapper = new ModelMapper();
-        CusteioMunicipioRepository repository = mock(CusteioMunicipioRepository.class);
-        CusteioController custeioController = new CusteioController(modelMapper, repository, new CusteioService(),
-                mock(CusteioFeignClient.class));
+        CusteioService custeioService = mock(CusteioService.class);
+        doNothing().when(custeioService).updateList((CusteioMunicipio) any());
+        CusteioController custeioController = new CusteioController(new ModelMapper(),
+                mock(CusteioMunicipioRepository.class), custeioService, mock(CusteioFeignClient.class));
 
         CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
         custeioMunicipio.setAnoEmissao("Ano Emissao");
@@ -236,7 +207,7 @@ public class CusteioControllerTest {
         custeioMunicipio.setCdEstado("Cd Estado");
         custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("SOJA");
+        custeioMunicipio.setCdProduto("alice.liddell@example.org");
         custeioMunicipio.setCdPrograma("Cd Programa");
         custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
@@ -245,33 +216,137 @@ public class CusteioControllerTest {
         custeioMunicipio.setId(123L);
         custeioMunicipio.setMesEmissao("Mes Emissao");
         custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("SOJA");
+        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
         custeioMunicipio.setVlCusteio(10.0d);
-        FilterDto actualToFilterDtoResult = custeioController.toFilterDto(custeioMunicipio);
-        assertEquals("Ano Emissao", actualToFilterDtoResult.getAnoEmissao());
-        assertEquals(10.0d, actualToFilterDtoResult.getVlCusteio());
-        assertEquals("SOJA", actualToFilterDtoResult.getNomeProduto());
-        assertEquals("Municipio", actualToFilterDtoResult.getMunicipio());
-        assertEquals(123L, actualToFilterDtoResult.getId().longValue());
-        assertEquals("Cod Cad Mu", actualToFilterDtoResult.getCodCadMu());
-        assertEquals("SOJA", actualToFilterDtoResult.getCdProduto());
+        custeioController.updateList(123L, custeioMunicipio);
+        verify(custeioService).updateList((CusteioMunicipio) any());
+        assertEquals(123L, custeioMunicipio.getId());
     }
 
     @Test
-    void testGetListFilter() {
+    void testUpdateList3() {
 
-        CusteioMunicipioRepository custeioMunicipioRepository = mock(CusteioMunicipioRepository.class);
-        when(custeioMunicipioRepository.findAll()).thenReturn(new ArrayList<>());
-        ModelMapper modelMapper = new ModelMapper();
-        CusteioController custeioController = new CusteioController(modelMapper, custeioMunicipioRepository,
-                new CusteioService(), mock(CusteioFeignClient.class));
-        ModelAndView actualListFilter = custeioController.getListFilter(new ConcurrentModel(), null);
+
+        CusteioService custeioService = mock(CusteioService.class);
+        doNothing().when(custeioService).updateList((CusteioMunicipio) any());
+        CusteioController custeioController = new CusteioController(new ModelMapper(),
+                mock(CusteioMunicipioRepository.class), custeioService, mock(CusteioFeignClient.class));
+        CusteioMunicipio custeioMunicipio = mock(CusteioMunicipio.class);
+        doNothing().when(custeioMunicipio).setAnoEmissao((String) any());
+        doNothing().when(custeioMunicipio).setAreaCusteio((Integer) any());
+        doNothing().when(custeioMunicipio).setAtividade((String) any());
+        doNothing().when(custeioMunicipio).setCdEstado((String) any());
+        doNothing().when(custeioMunicipio).setCdFonteRecurso((String) any());
+        doNothing().when(custeioMunicipio).setCdModalidade((String) any());
+        doNothing().when(custeioMunicipio).setCdProduto((String) any());
+        doNothing().when(custeioMunicipio).setCdPrograma((String) any());
+        doNothing().when(custeioMunicipio).setCdSubPrograma((String) any());
+        doNothing().when(custeioMunicipio).setCdTipoSeguro((String) any());
+        doNothing().when(custeioMunicipio).setCodCadMu((String) any());
+        doNothing().when(custeioMunicipio).setCodIbge((String) any());
+        doNothing().when(custeioMunicipio).setId(anyLong());
+        doNothing().when(custeioMunicipio).setMesEmissao((String) any());
+        doNothing().when(custeioMunicipio).setMunicipio((String) any());
+        doNothing().when(custeioMunicipio).setNomeProduto((String) any());
+        doNothing().when(custeioMunicipio).setVlCusteio((Double) any());
+        custeioMunicipio.setAnoEmissao("Ano Emissao");
+        custeioMunicipio.setAreaCusteio(1);
+        custeioMunicipio.setAtividade("Atividade");
+        custeioMunicipio.setCdEstado("Cd Estado");
+        custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
+        custeioMunicipio.setCdModalidade("Cd Modalidade");
+        custeioMunicipio.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio.setCdPrograma("Cd Programa");
+        custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
+        custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
+        custeioMunicipio.setCodCadMu("Cod Cad Mu");
+        custeioMunicipio.setCodIbge("Cod Ibge");
+        custeioMunicipio.setId(123L);
+        custeioMunicipio.setMesEmissao("Mes Emissao");
+        custeioMunicipio.setMunicipio("Municipio");
+        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio.setVlCusteio(10.0d);
+        custeioController.updateList(123L, custeioMunicipio);
+        verify(custeioService).updateList((CusteioMunicipio) any());
+        verify(custeioMunicipio).setAnoEmissao((String) any());
+        verify(custeioMunicipio).setAreaCusteio((Integer) any());
+        verify(custeioMunicipio).setAtividade((String) any());
+        verify(custeioMunicipio).setCdEstado((String) any());
+        verify(custeioMunicipio).setCdFonteRecurso((String) any());
+        verify(custeioMunicipio).setCdModalidade((String) any());
+        verify(custeioMunicipio).setCdProduto((String) any());
+        verify(custeioMunicipio).setCdPrograma((String) any());
+        verify(custeioMunicipio).setCdSubPrograma((String) any());
+        verify(custeioMunicipio).setCdTipoSeguro((String) any());
+        verify(custeioMunicipio).setCodCadMu((String) any());
+        verify(custeioMunicipio).setCodIbge((String) any());
+        verify(custeioMunicipio, atLeast(1)).setId(anyLong());
+        verify(custeioMunicipio).setMesEmissao((String) any());
+        verify(custeioMunicipio).setMunicipio((String) any());
+        verify(custeioMunicipio).setNomeProduto((String) any());
+        verify(custeioMunicipio).setVlCusteio((Double) any());
+    }
+
+
+    @Test
+    void testSerchByAno2() {
+
+
+        CusteioService custeioService = mock(CusteioService.class);
+        when(custeioService.serchByAno((String) any(), (Pageable) any())).thenReturn(new PageImpl<>(new ArrayList<>()));
+        ResponseEntity<Page<CusteioMunicipio>> actualSerchByAnoResult = (new CusteioController(new ModelMapper(),
+                mock(CusteioMunicipioRepository.class), custeioService, mock(CusteioFeignClient.class)))
+                .serchByAno("Ano Emissao", null);
+        assertTrue(actualSerchByAnoResult.hasBody());
+        assertTrue(actualSerchByAnoResult.getBody().toList().isEmpty());
+        assertEquals(HttpStatus.OK, actualSerchByAnoResult.getStatusCode());
+        assertTrue(actualSerchByAnoResult.getHeaders().isEmpty());
+        verify(custeioService).serchByAno((String) any(), (Pageable) any());
+    }
+
+
+    @Test
+    void testListAll2() {
+
+
+        CusteioService custeioService = mock(CusteioService.class);
+        ArrayList<FilterDto> filterDtoList = new ArrayList<>();
+        when(custeioService.listAll((String) any(), (Pageable) any())).thenReturn(filterDtoList);
+        List<FilterDto> actualListAllResult = (new CusteioController(new ModelMapper(),
+                mock(CusteioMunicipioRepository.class), custeioService, mock(CusteioFeignClient.class))).listAll("Ano Emissao");
+        assertSame(filterDtoList, actualListAllResult);
+        assertTrue(actualListAllResult.isEmpty());
+        verify(custeioService).listAll((String) any(), (Pageable) any());
+    }
+
+    @Test
+    void testGetListFilter2() {
+
+        CusteioService custeioService = mock(CusteioService.class);
+        when(custeioService.listAll((String) any(), (Pageable) any())).thenReturn(new ArrayList<>());
+        ModelAndView actualListFilter = (new CusteioController(new ModelMapper(), mock(CusteioMunicipioRepository.class),
+                custeioService, mock(CusteioFeignClient.class))).getListFilter("Ano Emissao", null);
         assertTrue(actualListFilter.isReference());
         assertSame(actualListFilter.getModel(), actualListFilter.getModelMap());
-        verify(custeioMunicipioRepository).findAll();
+        verify(custeioService).listAll((String) any(), (Pageable) any());
     }
+
     @Test
     void testFindFilter2() {
+
+        CusteioService custeioService = mock(CusteioService.class);
+        ArrayList<FilterConverter> filterConverterList = new ArrayList<>();
+        when(custeioService.findFilter((String) any())).thenReturn(filterConverterList);
+        List<FilterConverter> actualFindFilterResult = (new CusteioController(new ModelMapper(),
+                mock(CusteioMunicipioRepository.class), custeioService, mock(CusteioFeignClient.class)))
+                .findFilter("Ano Emissao");
+        assertSame(filterConverterList, actualFindFilterResult);
+        assertTrue(actualFindFilterResult.isEmpty());
+        verify(custeioService).findFilter((String) any());
+    }
+
+    @Test
+    void testFindFilter3() {
 
         CusteioService custeioService = mock(CusteioService.class);
         ArrayList<FilterConverter> filterConverterList = new ArrayList<>();
