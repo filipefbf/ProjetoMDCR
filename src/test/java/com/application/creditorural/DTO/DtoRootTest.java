@@ -14,33 +14,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DtoRootTest {
 
-    /**
-     * Method under test: {@link DtoRoot#canEqual(Object)}
-     */
     @Test
     void testCanEqual() {
         assertFalse((new DtoRoot()).canEqual("Other"));
     }
 
-    /**
-     * Method under test: {@link DtoRoot#canEqual(Object)}
-     */
     @Test
     void testCanEqual2() {
         DtoRoot dtoRoot = new DtoRoot();
         assertTrue(dtoRoot.canEqual(new DtoRoot()));
     }
 
-    /**
-     * Methods under test:
-     *
-     * <ul>
-     *   <li>{@link DtoRoot#DtoRoot()}
-     *   <li>{@link DtoRoot#setValue(List)}
-     *   <li>{@link DtoRoot#toString()}
-     *   <li>{@link DtoRoot#getValue()}
-     * </ul>
-     */
     @Test
     void testConstructor() {
         DtoRoot actualDtoRoot = new DtoRoot();
@@ -51,16 +35,6 @@ class DtoRootTest {
         assertEquals("DtoRoot(value=[])", actualToStringResult);
     }
 
-    /**
-     * Methods under test:
-     *
-     * <ul>
-     *   <li>{@link DtoRoot#DtoRoot(List)}
-     *   <li>{@link DtoRoot#setValue(List)}
-     *   <li>{@link DtoRoot#toString()}
-     *   <li>{@link DtoRoot#getValue()}
-     * </ul>
-     */
     @Test
     void testConstructor2() {
         ArrayList<ListDto> listDtoList = new ArrayList<>();
@@ -74,23 +48,12 @@ class DtoRootTest {
         assertEquals("DtoRoot(value=[])", actualToStringResult);
     }
 
-    /**
-     * Method under test: {@link DtoRoot#equals(Object)}
-     */
     @Test
     void testEquals() {
         assertNotEquals(new DtoRoot(), null);
         assertNotEquals(new DtoRoot(), "Different type to DtoRoot");
     }
 
-    /**
-     * Methods under test:
-     *
-     * <ul>
-     *   <li>{@link DtoRoot#equals(Object)}
-     *   <li>{@link DtoRoot#hashCode()}
-     * </ul>
-     */
     @Test
     void testEquals2() {
         DtoRoot dtoRoot = new DtoRoot();
@@ -99,14 +62,6 @@ class DtoRootTest {
         assertEquals(expectedHashCodeResult, dtoRoot.hashCode());
     }
 
-    /**
-     * Methods under test:
-     *
-     * <ul>
-     *   <li>{@link DtoRoot#equals(Object)}
-     *   <li>{@link DtoRoot#hashCode()}
-     * </ul>
-     */
     @Test
     void testEquals3() {
         DtoRoot dtoRoot = new DtoRoot();
@@ -116,32 +71,18 @@ class DtoRootTest {
         assertEquals(expectedHashCodeResult, dtoRoot1.hashCode());
     }
 
-    /**
-     * Method under test: {@link DtoRoot#equals(Object)}
-     */
     @Test
     void testEquals4() {
         DtoRoot dtoRoot = new DtoRoot(new ArrayList<>());
         assertNotEquals(dtoRoot, new DtoRoot());
     }
 
-    /**
-     * Method under test: {@link DtoRoot#equals(Object)}
-     */
     @Test
     void testEquals5() {
         DtoRoot dtoRoot = new DtoRoot();
         assertNotEquals(dtoRoot, new DtoRoot(new ArrayList<>()));
     }
 
-    /**
-     * Methods under test:
-     *
-     * <ul>
-     *   <li>{@link DtoRoot#equals(Object)}
-     *   <li>{@link DtoRoot#hashCode()}
-     * </ul>
-     */
     @Test
     void testEquals6() {
         DtoRoot dtoRoot = new DtoRoot(new ArrayList<>());

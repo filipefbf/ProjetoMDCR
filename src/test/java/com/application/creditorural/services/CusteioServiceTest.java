@@ -3,6 +3,7 @@ package com.application.creditorural.services;
 import com.application.creditorural.entities.CusteioMunicipio;
 import com.application.creditorural.entities.converter.FilterConverter;
 import com.application.creditorural.repositories.CusteioMunicipioRepository;
+import com.application.creditorural.services.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.any;
@@ -49,9 +52,6 @@ class CusteioServiceTest {
     private CusteioMunicipio custeioMunicipio;
     private Optional<CusteioMunicipio> municipioOpitional;
 
-    /**
-     * Method under test: {@link CusteioService#listCusteio(Pageable)}
-     */
     @Test
     void testListCusteio() {
         PageImpl<CusteioMunicipio> pageImpl = new PageImpl<>(new ArrayList<>());
@@ -62,9 +62,6 @@ class CusteioServiceTest {
         verify(custeioMunicipioRepository).findAll((Pageable) any());
     }
 
-    /**
-     * Method under test: {@link CusteioService#save(CusteioMunicipio)}
-     */
     @Test
     void testSave() {
         CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
@@ -74,7 +71,7 @@ class CusteioServiceTest {
         custeioMunicipio.setCdEstado("Cd Estado");
         custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio.setCdProduto("SOJA");
         custeioMunicipio.setCdPrograma("Cd Programa");
         custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
@@ -83,7 +80,7 @@ class CusteioServiceTest {
         custeioMunicipio.setId(123L);
         custeioMunicipio.setMesEmissao("Mes Emissao");
         custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio.setNomeProduto("SOJA");
         custeioMunicipio.setVlCusteio(10.0d);
         when(custeioMunicipioRepository.save((CusteioMunicipio) any())).thenReturn(custeioMunicipio);
 
@@ -94,7 +91,7 @@ class CusteioServiceTest {
         custeioMunicipio1.setCdEstado("Cd Estado");
         custeioMunicipio1.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio1.setCdModalidade("Cd Modalidade");
-        custeioMunicipio1.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio1.setCdProduto("SOJA");
         custeioMunicipio1.setCdPrograma("Cd Programa");
         custeioMunicipio1.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio1.setCdTipoSeguro("Cd Tipo Seguro");
@@ -103,15 +100,12 @@ class CusteioServiceTest {
         custeioMunicipio1.setId(123L);
         custeioMunicipio1.setMesEmissao("Mes Emissao");
         custeioMunicipio1.setMunicipio("Municipio");
-        custeioMunicipio1.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio1.setNomeProduto("SOJA");
         custeioMunicipio1.setVlCusteio(10.0d);
         assertSame(custeioMunicipio, custeioService.save(custeioMunicipio1));
         verify(custeioMunicipioRepository).save((CusteioMunicipio) any());
     }
 
-    /**
-     * Method under test: {@link CusteioService#AddNew(CusteioMunicipio)}
-     */
     @Test
     void testAddNew() {
         CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
@@ -121,7 +115,7 @@ class CusteioServiceTest {
         custeioMunicipio.setCdEstado("Cd Estado");
         custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio.setCdProduto("SOJA");
         custeioMunicipio.setCdPrograma("Cd Programa");
         custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
@@ -130,7 +124,7 @@ class CusteioServiceTest {
         custeioMunicipio.setId(123L);
         custeioMunicipio.setMesEmissao("Mes Emissao");
         custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio.setNomeProduto("SOJA");
         custeioMunicipio.setVlCusteio(10.0d);
         when(custeioMunicipioRepository.save((CusteioMunicipio) any())).thenReturn(custeioMunicipio);
 
@@ -141,7 +135,7 @@ class CusteioServiceTest {
         custeioMunicipio1.setCdEstado("Cd Estado");
         custeioMunicipio1.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio1.setCdModalidade("Cd Modalidade");
-        custeioMunicipio1.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio1.setCdProduto("SOJA");
         custeioMunicipio1.setCdPrograma("Cd Programa");
         custeioMunicipio1.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio1.setCdTipoSeguro("Cd Tipo Seguro");
@@ -150,13 +144,13 @@ class CusteioServiceTest {
         custeioMunicipio1.setId(123L);
         custeioMunicipio1.setMesEmissao("Mes Emissao");
         custeioMunicipio1.setMunicipio("Municipio");
-        custeioMunicipio1.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio1.setNomeProduto("SOJA");
         custeioMunicipio1.setVlCusteio(10.0d);
         custeioService.AddNew(custeioMunicipio1);
         verify(custeioMunicipioRepository).save((CusteioMunicipio) any());
         assertEquals("Ano Emissao", custeioMunicipio1.getAnoEmissao());
         assertEquals(10.0d, custeioMunicipio1.getVlCusteio().doubleValue());
-        assertEquals("alice.liddell@example.org", custeioMunicipio1.getNomeProduto());
+        assertEquals("SOJA", custeioMunicipio1.getNomeProduto());
         assertEquals("Municipio", custeioMunicipio1.getMunicipio());
         assertEquals("Mes Emissao", custeioMunicipio1.getMesEmissao());
         assertEquals(123L, custeioMunicipio1.getId());
@@ -165,7 +159,7 @@ class CusteioServiceTest {
         assertEquals("Cd Tipo Seguro", custeioMunicipio1.getCdTipoSeguro());
         assertEquals("Cd Sub Programa", custeioMunicipio1.getCdSubPrograma());
         assertEquals("Cd Programa", custeioMunicipio1.getCdPrograma());
-        assertEquals("alice.liddell@example.org", custeioMunicipio1.getCdProduto());
+        assertEquals("SOJA", custeioMunicipio1.getCdProduto());
         assertEquals("Cd Modalidade", custeioMunicipio1.getCdModalidade());
         assertEquals("Cd Fonte Recurso", custeioMunicipio1.getCdFonteRecurso());
         assertEquals("Cd Estado", custeioMunicipio1.getCdEstado());
@@ -181,9 +175,6 @@ class CusteioServiceTest {
         PageImpl<CusteioMunicipio> custeioPage = new PageImpl<>(List.of());
     }
 
-    /**
-     * Method under test: {@link CusteioService#findById(long)}
-     */
     @Test
     void testFindById() {
         CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
@@ -193,7 +184,7 @@ class CusteioServiceTest {
         custeioMunicipio.setCdEstado("Cd Estado");
         custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio.setCdProduto("SOJA");
         custeioMunicipio.setCdPrograma("Cd Programa");
         custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
@@ -202,7 +193,7 @@ class CusteioServiceTest {
         custeioMunicipio.setId(123L);
         custeioMunicipio.setMesEmissao("Mes Emissao");
         custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio.setNomeProduto("SOJA");
         custeioMunicipio.setVlCusteio(10.0d);
         Optional<CusteioMunicipio> ofResult = Optional.of(custeioMunicipio);
         when(custeioMunicipioRepository.findById((Long) any())).thenReturn(ofResult);
@@ -222,10 +213,38 @@ class CusteioServiceTest {
         //Assertions.assertEquals(municipioOpitional, response.get());
         //Assertions.assertEquals(1L, response.getId());
     }
+    @Test
+    void testFindByIdd() {
+        CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
+        custeioMunicipio.setAnoEmissao("Ano Emissao");
+        custeioMunicipio.setAreaCusteio(1);
+        custeioMunicipio.setAtividade("Atividade");
+        custeioMunicipio.setCdEstado("Cd Estado");
+        custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
+        custeioMunicipio.setCdModalidade("Cd Modalidade");
+        custeioMunicipio.setCdProduto("SOJA");
+        custeioMunicipio.setCdPrograma("Cd Programa");
+        custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
+        custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
+        custeioMunicipio.setCodCadMu("Cod Cad Mu");
+        custeioMunicipio.setCodIbge("Cod Ibge");
+        custeioMunicipio.setId(123L);
+        custeioMunicipio.setMesEmissao("Mes Emissao");
+        custeioMunicipio.setMunicipio("Municipio");
+        custeioMunicipio.setNomeProduto("SOJA");
+        custeioMunicipio.setVlCusteio(10.0d);
+        Optional<CusteioMunicipio> ofResult = Optional.of(custeioMunicipio);
+        when(custeioMunicipioRepository.findById((Long) any())).thenReturn(ofResult);
+        assertSame(custeioMunicipio, custeioService.findByIdd(123L));
+        verify(custeioMunicipioRepository).findById((Long) any());
+    }
+    @Test
+    void testFindByIdd2() {
+        when(custeioMunicipioRepository.findById((Long) any())).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, () -> custeioService.findByIdd(123L));
+        verify(custeioMunicipioRepository).findById((Long) any());
+    }
 
-    /**
-     * Method under test: {@link CusteioService#deleteById(Long)}
-     */
     @Test
     void testDeleteById() {
         doNothing().when(custeioMunicipioRepository).deleteById((Long) any());
@@ -233,9 +252,6 @@ class CusteioServiceTest {
         verify(custeioMunicipioRepository).deleteById((Long) any());
     }
 
-    /**
-     * Method under test: {@link CusteioService#findAll(Pageable)}
-     */
     @Test
     void testFindAll() {
         PageImpl<CusteioMunicipio> pageImpl = new PageImpl<>(new ArrayList<>());
@@ -246,9 +262,6 @@ class CusteioServiceTest {
         verify(custeioMunicipioRepository).findAll((Pageable) any());
     }
 
-    /**
-     * Method under test: {@link CusteioService#findPage(int)}
-     */
     @Test
     void testFindPage() {
         PageImpl<CusteioMunicipio> pageImpl = new PageImpl<>(new ArrayList<>());
@@ -259,35 +272,6 @@ class CusteioServiceTest {
         verify(custeioMunicipioRepository).findAll((Pageable) any());
     }
 
-    /**
-     * Method under test: {@link CusteioService#findPage(int)}
-     */
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testFindPage2() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.IllegalArgumentException: Page index must not be less than zero
-        //       at org.springframework.data.domain.AbstractPageRequest.<init>(AbstractPageRequest.java:45)
-        //       at org.springframework.data.domain.PageRequest.<init>(PageRequest.java:45)
-        //       at org.springframework.data.domain.PageRequest.of(PageRequest.java:72)
-        //       at org.springframework.data.domain.PageRequest.of(PageRequest.java:60)
-        //       at com.application.creditorural.services.CusteioService.findPage(CusteioService.java:42)
-        //   In order to prevent findPage(int)
-        //   from throwing IllegalArgumentException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   findPage(int).
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        when(custeioMunicipioRepository.findAll((Pageable) any())).thenReturn(new PageImpl<>(new ArrayList<>()));
-        custeioService.findPage(0);
-    }
-
-    /**
-     * Method under test: {@link CusteioService#findFilter(String)}
-     */
     @Test
     void testFindFilter() {
         ArrayList<FilterConverter> filterConverterList = new ArrayList<>();
@@ -298,9 +282,6 @@ class CusteioServiceTest {
         verify(custeioMunicipioRepository).searchYearFilter((String) any());
     }
 
-    /**
-     * Method under test: {@link CusteioService#update(CusteioMunicipio)}
-     */
     @Test
     void testUpdate() {
         CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
@@ -310,7 +291,7 @@ class CusteioServiceTest {
         custeioMunicipio.setCdEstado("Cd Estado");
         custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio.setCdProduto("SOJA");
         custeioMunicipio.setCdPrograma("Cd Programa");
         custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
@@ -319,7 +300,7 @@ class CusteioServiceTest {
         custeioMunicipio.setId(123L);
         custeioMunicipio.setMesEmissao("Mes Emissao");
         custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio.setNomeProduto("SOJA");
         custeioMunicipio.setVlCusteio(10.0d);
         when(custeioMunicipioRepository.save((CusteioMunicipio) any())).thenReturn(custeioMunicipio);
 
@@ -330,7 +311,7 @@ class CusteioServiceTest {
         custeioMunicipio1.setCdEstado("Cd Estado");
         custeioMunicipio1.setCdFonteRecurso("Cd Fonte Recurso");
         custeioMunicipio1.setCdModalidade("Cd Modalidade");
-        custeioMunicipio1.setCdProduto("alice.liddell@example.org");
+        custeioMunicipio1.setCdProduto("SOJA");
         custeioMunicipio1.setCdPrograma("Cd Programa");
         custeioMunicipio1.setCdSubPrograma("Cd Sub Programa");
         custeioMunicipio1.setCdTipoSeguro("Cd Tipo Seguro");
@@ -339,13 +320,13 @@ class CusteioServiceTest {
         custeioMunicipio1.setId(123L);
         custeioMunicipio1.setMesEmissao("Mes Emissao");
         custeioMunicipio1.setMunicipio("Municipio");
-        custeioMunicipio1.setNomeProduto("alice.liddell@example.org");
+        custeioMunicipio1.setNomeProduto("SOJA");
         custeioMunicipio1.setVlCusteio(10.0d);
         custeioService.update(custeioMunicipio1);
         verify(custeioMunicipioRepository).save((CusteioMunicipio) any());
         assertEquals("Ano Emissao", custeioMunicipio1.getAnoEmissao());
         assertEquals(10.0d, custeioMunicipio1.getVlCusteio().doubleValue());
-        assertEquals("alice.liddell@example.org", custeioMunicipio1.getNomeProduto());
+        assertEquals("SOJA", custeioMunicipio1.getNomeProduto());
         assertEquals("Municipio", custeioMunicipio1.getMunicipio());
         assertEquals("Mes Emissao", custeioMunicipio1.getMesEmissao());
         assertEquals(123L, custeioMunicipio1.getId());
@@ -354,7 +335,7 @@ class CusteioServiceTest {
         assertEquals("Cd Tipo Seguro", custeioMunicipio1.getCdTipoSeguro());
         assertEquals("Cd Sub Programa", custeioMunicipio1.getCdSubPrograma());
         assertEquals("Cd Programa", custeioMunicipio1.getCdPrograma());
-        assertEquals("alice.liddell@example.org", custeioMunicipio1.getCdProduto());
+        assertEquals("SOJA", custeioMunicipio1.getCdProduto());
         assertEquals("Cd Modalidade", custeioMunicipio1.getCdModalidade());
         assertEquals("Cd Fonte Recurso", custeioMunicipio1.getCdFonteRecurso());
         assertEquals("Cd Estado", custeioMunicipio1.getCdEstado());
