@@ -211,66 +211,6 @@ public class CusteioControllerTest {
     }
 
     @Test
-    void testListAll() {
-
-        CusteioMunicipioRepository custeioMunicipioRepository = mock(CusteioMunicipioRepository.class);
-        when(custeioMunicipioRepository.findAll()).thenReturn(new ArrayList<>());
-        ModelMapper modelMapper = new ModelMapper();
-        assertTrue((new CusteioController(modelMapper, custeioMunicipioRepository, new CusteioService(),
-                mock(CusteioFeignClient.class))).listAll().isEmpty());
-        verify(custeioMunicipioRepository).findAll();
-    }
-
-    @Test
-    void testToFilterDto() {
-
-        ModelMapper modelMapper = new ModelMapper();
-        CusteioMunicipioRepository repository = mock(CusteioMunicipioRepository.class);
-        CusteioController custeioController = new CusteioController(modelMapper, repository, new CusteioService(),
-                mock(CusteioFeignClient.class));
-
-        CusteioMunicipio custeioMunicipio = new CusteioMunicipio();
-        custeioMunicipio.setAnoEmissao("Ano Emissao");
-        custeioMunicipio.setAreaCusteio(1);
-        custeioMunicipio.setAtividade("Atividade");
-        custeioMunicipio.setCdEstado("Cd Estado");
-        custeioMunicipio.setCdFonteRecurso("Cd Fonte Recurso");
-        custeioMunicipio.setCdModalidade("Cd Modalidade");
-        custeioMunicipio.setCdProduto("SOJA");
-        custeioMunicipio.setCdPrograma("Cd Programa");
-        custeioMunicipio.setCdSubPrograma("Cd Sub Programa");
-        custeioMunicipio.setCdTipoSeguro("Cd Tipo Seguro");
-        custeioMunicipio.setCodCadMu("Cod Cad Mu");
-        custeioMunicipio.setCodIbge("Cod Ibge");
-        custeioMunicipio.setId(123L);
-        custeioMunicipio.setMesEmissao("Mes Emissao");
-        custeioMunicipio.setMunicipio("Municipio");
-        custeioMunicipio.setNomeProduto("SOJA");
-        custeioMunicipio.setVlCusteio(10.0d);
-        FilterDto actualToFilterDtoResult = custeioController.toFilterDto(custeioMunicipio);
-        assertEquals("Ano Emissao", actualToFilterDtoResult.getAnoEmissao());
-        assertEquals(10.0d, actualToFilterDtoResult.getVlCusteio());
-        assertEquals("SOJA", actualToFilterDtoResult.getNomeProduto());
-        assertEquals("Municipio", actualToFilterDtoResult.getMunicipio());
-        assertEquals(123L, actualToFilterDtoResult.getId().longValue());
-        assertEquals("Cod Cad Mu", actualToFilterDtoResult.getCodCadMu());
-        assertEquals("SOJA", actualToFilterDtoResult.getCdProduto());
-    }
-
-    @Test
-    void testGetListFilter() {
-
-        CusteioMunicipioRepository custeioMunicipioRepository = mock(CusteioMunicipioRepository.class);
-        when(custeioMunicipioRepository.findAll()).thenReturn(new ArrayList<>());
-        ModelMapper modelMapper = new ModelMapper();
-        CusteioController custeioController = new CusteioController(modelMapper, custeioMunicipioRepository,
-                new CusteioService(), mock(CusteioFeignClient.class));
-        ModelAndView actualListFilter = custeioController.getListFilter(new ConcurrentModel(), null);
-        assertTrue(actualListFilter.isReference());
-        assertSame(actualListFilter.getModel(), actualListFilter.getModelMap());
-        verify(custeioMunicipioRepository).findAll();
-    }
-    @Test
     void testFindFilter2() {
 
         CusteioService custeioService = mock(CusteioService.class);
