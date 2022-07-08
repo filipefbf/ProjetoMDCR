@@ -124,13 +124,13 @@ public class CusteioController {
 
     @GetMapping(value = "/search-year-filter")
     @ApiOperation(value = "Busca todos os registros listados por ano")
-    public List<FilterDto> listAll(@PathVariable String anoEmissao) {
+    public List<FilterDto> listAll(@RequestParam String anoEmissao) {
         return custeioService.listAll(anoEmissao, Pageable.unpaged());
     }
 
    @GetMapping(value = "/search-filter")
     @ApiOperation(value = "EndPoint HTML")
-    public ModelAndView getListFilter(@PathVariable String anoEmissao, Pageable pageable) {
+    public ModelAndView getListFilter(@RequestParam String anoEmissao, Pageable pageable) {
         List<FilterDto> list = custeioService.listAll(anoEmissao, Pageable.unpaged());
 
         ModelAndView mv = new ModelAndView("dashBoardFilter");
