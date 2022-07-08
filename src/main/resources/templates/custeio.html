@@ -235,10 +235,8 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Id:</label>
-                        <input type="text" class="form-control" id="idEdit" name="id">
-                    </div>
+                        <input type="hidden" class="form-control" id="idEdit" name="id">
+
 
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Municipio:</label>
@@ -307,7 +305,7 @@
 
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Modalidade:</label>
-                        <input type="text" class="form-control" id="modalidadeEdit" name="modalidade">
+                        <input type="text" class="form-control" id="cdModalidadeEdit" name="modalidade">
                     </div>
 
                     <div class="form-group">
@@ -363,23 +361,24 @@
             var href= $(this).attr('href');
 
             $.get(href, function(custeio, status){
+            console.log(custeio)
                 $('#idEdit').val(custeio.id);
-                $('#municipioEdit').val(custeio.municipio);
+                $('#municipioEdit').val(custeio.Municipio);
                 $('#nomeProdutoEdit').val(custeio.nomeProduto);
-                $('#mesEmissaoEdit').val(custeio.mesEmissao);
-                $('#anoEmissaoEdit').val(custeio.anoEmissao);
+                $('#mesEmissaoEdit').val(custeio.MesEmissao);
+                $('#anoEmissaoEdit').val(custeio.AnoEmissao);
                 $('#cdProgramaEdit').val(custeio.cdPrograma);
                 $('#cdSubProgramaEdit').val(custeio.cdSubPrograma);
                 $('#cdFonteRecursoEdit').val(custeio.cdFonteRecurso);
                 $('#cdTipoSeguroEdit').val(custeio.cdTipoSeguro);
                 $('#cdEstadoEdit').val(custeio.cdEstado);
-                $('#vlCusteioEdit').val(custeio.vlCusteio);
+                $('#vlCusteioEdit').val(custeio.VlCusteio);
                 $('#cdProdutoEdit').val(custeio.cdProduto);
                 $('#codCadMuEdit').val(custeio.codCadMu);
-                $('#atividadeEdit').val(custeio.atividade);
+                $('#atividadeEdit').val(custeio.Atividade);
                 $('#cdModalidadeEdit').val(custeio.cdModalidade);
                 $('#codIbgeEdit').val(custeio.codIbge);
-                $('#areaCusteioEdit').val(custeio.areaCusteio);
+                $('#areaCusteioEdit').val(custeio.AreaCusteio);
             });
 
             $('#editModal').modal();
